@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第五期慢性腎臟病 (CKD Stage 5 / 5D) 口服營養品智慧推導系統</title>
+    <style>
+        :root {
+            --bg-main: #FDFBF7;
+            --bg-card: #FFFFFF;
+            --bg-sub: #F7F4EF;
+            --text-primary: #2D2522;
+            --text-secondary: #665C54;
+            --primary-color: #D97706;
+            --primary-hover: #B45309;
+            --accent-coral: #E06D53;
+            --border-color: #E6E1DA;
+            --alert-red: #DC2626;
+            --alert-amber: #D97706;
+            --alert-green: #059669;
+            --shadow: 0 4px 15px rgba(45, 37, 34, 0.05);
+            --radius: 12px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Microsoft JhengHei", sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-primary); line-height: 1.6; padding: 20px 10px; }
+        .container { max-width: 1100px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 25px; padding: 22px; background: linear-gradient(135deg, #FFFDF9 0%, #F5ECE0 100%); border-radius: var(--radius); border: 1px solid var(--border-color); box-shadow: var(--shadow); }
+        header h1 { color: #92400E; font-size: 1.8rem; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        header p { color: var(--text-secondary); font-size: 0.95rem; }
+        .quick-actions { display: flex; justify-content: flex-end; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+        .btn-action { background-color: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-primary); padding: 8px 16px; border-radius: 8px; font-size: 0.9rem; cursor: pointer; transition: all 0.2s ease; display: inline-flex; align-items: center; gap: 6px; }
+        .btn-action:hover { background-color: var(--bg-sub); border-color: var(--primary-color); color: var(--primary-color); }
+        .main-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        @media (min-width: 900px) { .main-grid { grid-template-columns: 1fr 1fr; } }
+        .card { background: var(--bg-card); border-radius: var(--radius); padding: 22px; border: 1px solid var(--border-color); box-shadow: var(--shadow); margin-bottom: 20px; }
+        .card-title { font-size: 1.2rem; color: #78350F; border-bottom: 2px solid #FDE68A; padding-bottom: 8px; margin-bottom: 18px; display: flex; align-items: center; gap: 8px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 14px; }
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 0.88rem; font-weight: 600; color: var(--text-primary); }
+        .form-group input, .form-group select { padding: 9px 12px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.95rem; background-color: #FAFAFA; color: var(--text-primary); }
+        .calc-output-box { background: #FEF3C7; border: 1px solid #FDE68A; border-radius: var(--radius); padding: 16px; margin-top: 15px; }
+        .calc-output-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .calc-item { display: flex; flex-direction: column; }
+        .calc-item .label { font-size: 0.8rem; color: #92400E; }
+        .calc-item .value { font-size: 1.15rem; font-weight: 700; color: #78350F; }
+        .alert-box { padding: 12px 16px; border-radius: 8px; margin-bottom: 12px; font-size: 0.9rem; display: flex; align-items: flex-start; gap: 10px; }
+        .alert-red { background-color: #FEF2F2; border: 1px solid #FCA5A5; color: #991B1B; }
+        .alert-amber { background-color: #FFFBEB; border: 1px solid #FDE68A; color: #92400E; }
+        .alert-green { background-color: #ECFDF5; border: 1px solid #6EE7B7; color: #065F46; }
+        .deduction-card { background: linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%); border: 2px solid #F59E0B; border-radius: var(--radius); padding: 18px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.12); }
+        .deduction-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+        .deduction-badge { background: #D97706; color: #FFFFFF; font-size: 0.85rem; font-weight: bold; padding: 4px 12px; border-radius: 20px; }
+        .deduction-product-name { font-size: 1.3rem; font-weight: 800; color: #78350F; }
+        .deduction-body { font-size: 0.95rem; color: #451A03; line-height: 1.6; }
+        .rec-card { border: 1px solid var(--border-color); border-radius: var(--radius); padding: 16px; margin-bottom: 15px; background-color: #FFFFFF; position: relative; }
+        .rec-card.top-pick { border: 2px solid var(--primary-color); background: linear-gradient(180deg, #FFFFFF 0%, #FFFBEB 100%); }
+        .top-badge { position: absolute; top: -10px; right: 15px; background: var(--primary-color); color: white; font-size: 0.75rem; padding: 2px 10px; border-radius: 20px; font-weight: bold; }
+        .rec-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+        .rec-title { font-size: 1.1rem; font-weight: bold; color: #78350F; }
+        .rec-brand { font-size: 0.85rem; color: var(--text-secondary); background: #F3F4F6; padding: 2px 8px; border-radius: 4px; }
+        .rec-specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; background: #F9FAFB; padding: 10px; border-radius: 6px; margin: 10px 0; font-size: 0.85rem; }
+        .rec-features { font-size: 0.88rem; color: #4B5563; line-height: 1.5; }
+        .tag-container { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+        .tag { font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; font-weight: 500; }
+        .tag-orange { background: #FFEDD5; color: #9A3412; }
+        .tag-green { background: #D1FAE5; color: #065F46; }
+        footer { text-align: center; padding: 20px; font-size: 0.85rem; color: var(--text-secondary); margin-top: 20px; border-top: 1px solid var(--border-color); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🩺 第五期慢性腎臟病 (CKD Stage 5 / 5D) 口服營養品智慧推導系統</h1>
+            <p>臨床決策支援工具｜整合個人身體指標、透析狀態、血糖及血清電解質數據自動推導首選營養品</p>
+        </header>
+
+        <div class="quick-actions">
+            <button class="btn-action" onclick="loadSampleData('ndd_dm')">💡 載入範例：未透析 + 糖尿病個案</button>
+            <button class="btn-action" onclick="loadSampleData('dd_pew')">💡 載入範例：已透析 + PEW/低白蛋白個案</button>
+            <button class="btn-action" onclick="resetForm()">🔄 重置數據</button>
+            <button class="btn-action" onclick="window.print()">🖨️ 列印/匯出評估表</button>
+        </div>
+
+        <div class="main-grid">
+            <div class="input-section">
+                <div class="card">
+                    <div class="card-title">👤 基本資料與熱量蛋白需求</div>
+                    <div class="form-grid">
+                        <div class="form-group"><label>年齡 (歲)</label><input type="number" id="age" value="65" oninput="calculateAll()"></div>
+                        <div class="form-group"><label>性別</label><select id="gender" onchange="calculateAll()"><option value="male">男</option><option value="female">女</option></select></div>
+                        <div class="form-group"><label>身高 (cm)</label><input type="number" id="height" value="165" oninput="calculateAll()"></div>
+                        <div class="form-group"><label>實際體重 (kg)</label><input type="number" id="weight" value="60" oninput="calculateAll()"></div>
+                    </div>
+                    <div class="calc-output-box">
+                        <div class="calc-output-grid">
+                            <div class="calc-item"><span class="label">BMI / 理想體重 (IBW)</span><span class="value" id="out-bmi-ibw">22.0 / 59.5 kg</span></div>
+                            <div class="calc-item"><span class="label">建議每日總熱量</span><span class="value" id="out-energy">1800~2100 kcal</span></div>
+                            <div class="calc-item"><span class="label">建議每日蛋白質需求</span><span class="value" id="out-protein">36~48 g</span></div>
+                            <div class="calc-item"><span class="label">熱量/蛋白基準</span><span class="value" id="out-target-spec">30~35 kcal | 0.6~0.8g</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-title">🧪 臨床狀態與檢驗數據 (Lab Values)</div>
+                    <div class="form-grid">
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label>腎臟病透析狀態</label>
+                            <select id="dialysis" onchange="calculateAll()">
+                                <option value="ndd">未透析 (NDD-CKD Stage 5)</option>
+                                <option value="hd">已透析 - 血液透析 (HD Stage 5D)</option>
+                                <option value="pd">已透析 - 腹膜透析 (PD Stage 5D)</option>
+                            </select>
+                        </div>
+                        <div class="form-group"><label>糖尿病 (DM)</label><select id="dm" onchange="calculateAll()"><option value="no">無</option><option value="yes">有</option></select></div>
+                        <div class="form-group"><label>HbA1c (%)</label><input type="number" id="hba1c" value="6.5" step="0.1" oninput="calculateAll()"></div>
+                        <div class="form-group"><label>Albumin (g/dL)</label><input type="number" id="alb" value="4.0" step="0.1" oninput="calculateAll()"></div>
+                        <div class="form-group"><label>血鈉 Na (mEq/L)</label><input type="number" id="na" value="138" oninput="calculateAll()"></div>
+                        <div class="form-group"><label>血鉀 K (mEq/L)</label><input type="number" id="k" value="4.2" step="0.1" oninput="calculateAll()"></div>
+                        <div class="form-group"><label>血鈣 Ca (mg/dL)</label><input type="number" id="ca" value="9.2" step="0.1" oninput="calculateAll()"></div>
+                        <div class="form-group"><label>血磷 P (mg/dL)</label><input type="number" id="p" value="4.5" step="0.1" oninput="calculateAll()"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="output-section">
+                <div id="deduction-summary-container"></div>
+                <div class="card">
+                    <div class="card-title">⚠️ 臨床營養警訊與評估提示</div>
+                    <div id="alert-container"></div>
+                </div>
+                <div class="card">
+                    <div class="card-title">🏆 臨床匹配口服營養品評分排名</div>
+                    <div id="recommendation-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>臨床備忘：本評估系統依據 KDOQI 2020 及衛福部特殊營養食品規範開發。實際處方請由醫師與營養師依個案飲食紀錄評估。</p>
+        </footer>
+    </div>
+
+    <script>
+        const PRODUCTS = [
+            { id: 'suplena', name: '亞培 勝補納 (Suplena)', brand: '亞培 (Abbott)', type: 'ndd', dmFriendly: true, kcal: 425, volume: '237 mL', density: '1.8 Kcal/mL', protein: 10.6, proteinRatio: '10%', na: 190, k: 270, p: 170, features: 'CarbSteady 緩釋醣類低GI配方、含膳食纖維、低蛋白(10.6g)、低磷鈉鉀。', tags: ['未透析首選', '糖尿病/低GI', '高熱量密度'] },
+            { id: 'fresubin_renal', name: '費森尤斯卡比 倍速力 (Fresubin Renal)', brand: '費森尤斯卡比', type: 'ndd', dmFriendly: true, kcal: 400, volume: '200 mL', density: '2.0 Kcal/mL', protein: 6.0, proteinRatio: '6%', na: 140, k: 140, p: 110, features: '2.0 Kcal/mL 濃縮超高熱量、極低蛋白質(6g)、深海魚油(EPA/DHA)、高MUFA。', tags: ['極低蛋白質', '嚴格限水', '魚油抗發炎'] },
+            { id: 'shenxuan1', name: '補體素 慎選1 (未洗腎適用)', brand: '思耐德', type: 'ndd', dmFriendly: true, kcal: 425, volume: '237 mL', density: '1.8 Kcal/mL', protein: 10.6, proteinRatio: '10%', na: 175, k: 250, p: 160, features: '優質雙蛋白(乳清+黃豆)、無糖低GI、添加維生素D3、高水溶性纖維。', tags: ['雙優質蛋白', '高MUFA', '低GI無糖'] },
+            { id: 'yinengchong', name: '益富 易能充 (粉劑沖泡)', brand: '益富', type: 'ndd', dmFriendly: false, kcal: 200, volume: '50 g/包', density: '高熱量補充', protein: 0.8, proteinRatio: '<2%', na: 113, k: 108, p: 42, features: '超低蛋白質(0.8g/包)、純熱量與脂肪組合、極低磷鈉鉀。', tags: ['超低蛋白質', '純熱量點心', '極低磷鉀'] },
+            { id: 'nepro', name: '亞培 普寧勝 (Nepro)', brand: '亞培 (Abbott)', type: 'dd', dmFriendly: true, kcal: 425, volume: '237 mL', density: '1.8 Kcal/mL', protein: 19.1, proteinRatio: '18%', na: 250, k: 270, p: 170, features: '高優質蛋白(19.1g)、CarbSteady 低GI慢消化醣類、強化 L-肉鹼與牛磺酸。', tags: ['透析首選', '高蛋白19.1g', '糖尿病/低GI'] },
+            { id: 'shengli2', name: '補體素 勝力2 (洗腎透析適用)', brand: '思耐德', type: 'dd', dmFriendly: true, kcal: 425, volume: '237 mL', density: '1.8 Kcal/mL', protein: 19.1, proteinRatio: '18%', na: 230, k: 230, p: 150, features: '高乳清蛋白(19.1g)、添加藻油 Omega-3、維生素D3、低鈉磷鉀。', tags: ['透析高蛋白', '藻油Omega-3', '低磷鈉鉀'] },
+            { id: 'yuanqiqiang', name: '益富 元氣強 (高蛋白低鉀)', brand: '益富', type: 'dd', dmFriendly: false, kcal: 104, volume: '25 g/包', density: '高蛋白濃縮', protein: 8.4, proteinRatio: '32%', na: 107, k: 40.8, p: 86, features: '高蛋白質密度(32%)、極低鉀離子(僅40.8mg/包)、極低磷。', tags: ['透析蛋白補充', '極低鉀40.8mg'] },
+            { id: 'fresubin_protein', name: '費森尤斯卡比 倍速 (Fresubin Protein)', brand: '費森尤斯卡比', type: 'dd', dmFriendly: false, kcal: 300, volume: '200 mL', density: '1.5 Kcal/mL', protein: 20.0, proteinRatio: '27%', na: 120, k: 240, p: 160, features: '每瓶高達 20g 蛋白質、1.5 Kcal/mL、無纖維好消化，適合 PEW 個案。', tags: ['最高蛋白20g', '對抗PEW'] }
+        ];
+
+        function calculateAll() {
+            const age = parseFloat(document.getElementById('age').value) || 65;
+            const gender = document.getElementById('gender').value;
+            const height = parseFloat(document.getElementById('height').value) || 165;
+            const weight = parseFloat(document.getElementById('weight').value) || 60;
+
+            const dialysis = document.getElementById('dialysis').value;
+            const dm = document.getElementById('dm').value;
+            const hba1c = parseFloat(document.getElementById('hba1c').value) || 6.5;
+            const alb = parseFloat(document.getElementById('alb').value) || 4.0;
+            const na = parseFloat(document.getElementById('na').value) || 138;
+            const k = parseFloat(document.getElementById('k').value) || 4.2;
+            const ca = parseFloat(document.getElementById('ca').value) || 9.2;
+            const p = parseFloat(document.getElementById('p').value) || 4.5;
+
+            const heightM = height / 100;
+            const bmi = (weight / (heightM * heightM)).toFixed(1);
+            let ibw = (gender === 'male') ? (height - 80) * 0.7 : (height - 70) * 0.6;
+            ibw = parseFloat(ibw.toFixed(1));
+
+            const energyMin = Math.round(ibw * 30);
+            const energyMax = Math.round(ibw * 35);
+
+            let protMinG = 0, protMaxG = 0, specText = "";
+            if (dialysis === 'ndd') {
+                protMinG = (ibw * 0.6).toFixed(1); protMaxG = (ibw * 0.8).toFixed(1);
+                specText = "30~35 kcal | 0.6~0.8g";
+            } else if (dialysis === 'hd') {
+                protMinG = (ibw * 1.2).toFixed(1); protMaxG = (ibw * 1.4).toFixed(1);
+                specText = "30~35 kcal | 1.2~1.4g";
+            } else {
+                protMinG = (ibw * 1.2).toFixed(1); protMaxG = (ibw * 1.3).toFixed(1);
+                specText = "30~35 kcal | 1.2~1.3g";
+            }
+
+            document.getElementById('out-bmi-ibw').innerText = `${bmi} / ${ibw} kg`;
+            document.getElementById('out-energy').innerText = `${energyMin} ~ ${energyMax} kcal/天`;
+            document.getElementById('out-protein').innerText = `${protMinG} ~ ${protMaxG} g/天`;
+            document.getElementById('out-target-spec').innerText = specText;
+
+            const alerts = [];
+            if (dialysis === 'ndd') {
+                alerts.push({ type: 'amber', text: '<b>未透析 (NDD-CKD) 提醒：</b>採低蛋白質飲食 (0.6-0.8 g/kg/天)，延緩進入透析時間。選用【未洗腎專用低蛋白配方】。' });
+            } else {
+                alerts.push({ type: 'green', text: '<b>透析 (DD-CKD) 提醒：</b>透析會流失蛋白質及胺基酸，需提升蛋白質至 1.2-1.4 g/kg/天。選擇【透析專用高蛋白配方】。' });
+            }
+            if (dm === 'yes' || hba1c >= 7.0) {
+                alerts.push({ type: 'amber', text: `<b>血糖偏高/糖尿病 (HbA1c: ${hba1c}%) 警訊：</b>建議優先選擇具 CarbSteady/低GI 緩釋醣結構配方。` });
+            }
+            if (alb < 3.8) {
+                alerts.push({ type: 'red', text: `<b>白蛋白偏低 (Serum Albumin: ${alb} g/dL)：</b>提示有 PEW 或營養不良風險！需補足熱量與蛋白質。` });
+            }
+            if (k > 5.0) {
+                alerts.push({ type: 'red', text: `<b>高血鉀警戒 (Serum K: ${k} mEq/L)：</b>嚴格限制鉀離子！選擇每份鉀 < 200 mg 之極低鉀營養品。` });
+            }
+            if (p > 5.5) {
+                alerts.push({ type: 'red', text: `<b>高血磷警戒 (Serum P: ${p} mg/dL)：</b>選擇低磷配方（磷 < 170 mg/份），請【隨餐配合磷結合劑】。` });
+            }
+
+            renderAlerts(alerts);
+            rankAndRenderRecommendations(dialysis, dm, hba1c, alb, k, p, energyMin, energyMax);
+        }
+
+        function renderAlerts(alerts) {
+            const container = document.getElementById('alert-container');
+            container.innerHTML = '';
+            alerts.forEach(a => {
+                const div = document.createElement('div');
+                div.className = `alert-box alert-${a.type}`;
+                div.innerHTML = `<span>⚠️</span> <div>${a.text}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        function rankAndRenderRecommendations(dialysis, dm, hba1c, alb, k, p, energyMin, energyMax) {
+            const isNDD = (dialysis === 'ndd');
+            const isDM = (dm === 'yes' || hba1c >= 7.0);
+            const isLowAlb = (alb < 3.8);
+            const isHighK = (k > 5.0);
+            const isHighP = (p > 5.5);
+
+            let matchingList = PRODUCTS.filter(item => isNDD ? item.type === 'ndd' : item.type === 'dd')
+                                       .map(item => ({ ...item, score: 0, reasons: [] }));
+
+            matchingList.forEach(item => {
+                item.score += 50;
+                if (isNDD) item.reasons.push('符合未透析 (NDD) 低蛋白質(<=10.6g)需求');
+                else item.reasons.push('符合已透析 (DD) 高蛋白質(>=19g)需求');
+
+                if (isDM && item.dmFriendly) { item.score += 25; item.reasons.push('具備 CarbSteady/低GI 緩釋醣配方'); }
+                if (!isNDD && isLowAlb && item.protein >= 19.0) { item.score += 20; item.reasons.push('高蛋白密度 (>=19g) 改善 PEW 狀態'); }
+                if (isNDD && isLowAlb && item.kcal >= 400) { item.score += 15; item.reasons.push('濃縮高熱量 (>=400kcal) 補足能量缺口'); }
+                if (isHighK && item.k <= 200) { item.score += 20; item.reasons.push('極低鉀離子 (<200mg/份)'); }
+                if (isHighP && item.p <= 160) { item.score += 15; item.reasons.push('極低磷離子 (<=160mg/份)'); }
+            });
+
+            matchingList.sort((a, b) => b.score - a.score);
+
+            const topPick = matchingList[0];
+            const secondPick = matchingList;
+            let dailyCans = Math.max(1, Math.round((energyMin * 0.35) / topPick.kcal));
+            if (topPick.kcal < 200) dailyCans = 1;
+
+            document.getElementById('deduction-summary-container').innerHTML = `
+                <div class="deduction-card">
+                    <div class="deduction-header">
+                        <span class="deduction-badge">🎯 智慧推導最推薦營養品結論</span>
+                        <div class="deduction-product-name">🌟 ${topPick.name}</div>
+                    </div>
+                    <div class="deduction-body">
+                        <p><b>【臨床推導推理理由】</b> ${topPick.reasons.join('；')}。</p>
+                        <p><b>【建議臨床處方攝取量】</b> 建議每日補充 <b>${dailyCans} ${topPick.kcal < 200 ? '包' : '罐/瓶'}</b>（約提供 ${topPick.kcal * dailyCans} Kcal 熱量及 ${(topPick.protein * dailyCans).toFixed(1)} g 蛋白質），作為口飲點心補充。</p>
+                        <p><b>【次優備選配方】</b> ${secondPick ? secondPick.name : '無'}。</p>
+                    </div>
+                </div>
+            `;
+
+            const container = document.getElementById('recommendation-container');
+            container.innerHTML = '';
+            matchingList.forEach((item, index) => {
+                const isTop = (index === 0);
+                const card = document.createElement('div');
+                card.className = `rec-card ${isTop ? 'top-pick' : ''}`;
+                let tagsHTML = item.tags.map(t => `<span class="tag tag-orange">${t}</span>`).join('');
+                if (item.dmFriendly) tagsHTML += `<span class="tag tag-green">醣管理低GI</span>`;
+
+                card.innerHTML = `
+                    ${isTop ? '<div class="top-badge">🌟 首選推導第一名 (' + item.score + '分)</div>' : '<div style="position:absolute; top:10px; right:15px; font-size:0.8rem; color:#888;">匹配分數: ' + item.score + '分</div>'}
+                    <div class="rec-header">
+                        <div class="rec-title">${item.name}</div>
+                        <div class="rec-brand">${item.brand}</div>
+                    </div>
+                    <div class="rec-specs">
+                        <span>🔥 熱量: ${item.kcal} Kcal (${item.volume})</span>
+                        <span>🥩 蛋白質: ${item.protein} g (${item.proteinRatio})</span>
+                        <span>🧂 鈉/鉀/磷: ${item.na}/${item.k}/${item.p} mg</span>
+                    </div>
+                    <div class="rec-features">${item.features}</div>
+                    <div class="tag-container">${tagsHTML}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function loadSampleData(sampleType) {
+            if (sampleType === 'ndd_dm') {
+                document.getElementById('age').value = 68; document.getElementById('gender').value = 'male';
+                document.getElementById('height').value = 168; document.getElementById('weight').value = 62;
+                document.getElementById('dialysis').value = 'ndd'; document.getElementById('dm').value = 'yes';
+                document.getElementById('hba1c').value = 7.8; document.getElementById('alb').value = 3.9;
+                document.getElementById('na').value = 137; document.getElementById('k').value = 4.6;
+                document.getElementById('ca').value = 9.0; document.getElementById('p').value = 4.8;
+            } else if (sampleType === 'dd_pew') {
+                document.getElementById('age').value = 62; document.getElementById('gender').value = 'female';
+                document.getElementById('height').value = 158; document.getElementById('weight').value = 48;
+                document.getElementById('dialysis').value = 'hd'; document.getElementById('dm').value = 'no';
+                document.getElementById('hba1c').value = 5.9; document.getElementById('alb').value = 3.2;
+                document.getElementById('na').value = 135; document.getElementById('k').value = 5.2;
+                document.getElementById('ca').value = 8.8; document.getElementById('p').value = 5.8;
+            }
+            calculateAll();
+        }
+
+        function resetForm() {
+            document.getElementById('age').value = 65; document.getElementById('gender').value = 'male';
+            document.getElementById('height').value = 165; document.getElementById('weight').value = 60;
+            document.getElementById('dialysis').value = 'ndd'; document.getElementById('dm').value = 'no';
+            document.getElementById('hba1c').value = 6.5; document.getElementById('alb').value = 4.0;
+            document.getElementById('na').value = 138; document.getElementById('k').value = 4.2;
+            document.getElementById('ca').value = 9.2; document.getElementById('p').value = 4.5;
+            calculateAll();
+        }
+
+        window.onload = function() { calculateAll(); };
+    </script>
+</body>
+</html>
