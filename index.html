@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>第五期慢性腎臟病 (CKD Stage 5 / 5D) 口服營養品智慧推導系統</title>
+    <title>第五期慢性腎臟病 (CKD Stage 5 / 5D) 口服營養品智慧匹配與跨品牌組合系統</title>
     <style>
         :root {
             --bg-main: #FDFBF7;
@@ -48,21 +48,26 @@
         .alert-red { background-color: #FEF2F2; border: 1px solid #FCA5A5; color: #991B1B; }
         .alert-amber { background-color: #FFFBEB; border: 1px solid #FDE68A; color: #92400E; }
         .alert-green { background-color: #ECFDF5; border: 1px solid #6EE7B7; color: #065F46; }
+
         .deduction-card { background: linear-gradient(135deg, #FEF3C7 0%, #FFFBEB 100%); border: 2px solid #F59E0B; border-radius: var(--radius); padding: 18px; margin-bottom: 20px; box-shadow: 0 4px 12px rgba(217, 119, 6, 0.12); }
         .deduction-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
         .deduction-badge { background: #D97706; color: #FFFFFF; font-size: 0.85rem; font-weight: bold; padding: 4px 12px; border-radius: 20px; }
-        .deduction-product-name { font-size: 1.3rem; font-weight: 800; color: #78350F; }
-        .deduction-body { font-size: 0.95rem; color: #451A03; line-height: 1.6; }
-        .rec-card { border: 1px solid var(--border-color); border-radius: var(--radius); padding: 16px; margin-bottom: 15px; background-color: #FFFFFF; position: relative; }
-        .rec-card.top-pick { border: 2px solid var(--primary-color); background: linear-gradient(180deg, #FFFFFF 0%, #FFFBEB 100%); }
-        .top-badge { position: absolute; top: -10px; right: 15px; background: var(--primary-color); color: white; font-size: 0.75rem; padding: 2px 10px; border-radius: 20px; font-weight: bold; }
+        .deduction-title { font-size: 1.25rem; font-weight: 800; color: #78350F; }
+        .deduction-body { font-size: 0.93rem; color: #451A03; line-height: 1.6; }
+
+        .combo-card { background: #ECFDF5; border: 1.5px solid #10B981; border-radius: var(--radius); padding: 16px; margin-bottom: 15px; }
+        .combo-title { font-size: 1.1rem; font-weight: bold; color: #065F46; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+
+        .rec-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        .rec-card { border: 1px solid var(--border-color); border-radius: var(--radius); padding: 16px; background-color: #FFFFFF; position: relative; }
+        .rec-card.highlight { border: 2px solid #D97706; background: #FFFDF9; }
         .rec-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
-        .rec-title { font-size: 1.1rem; font-weight: bold; color: #78350F; }
-        .rec-brand { font-size: 0.85rem; color: var(--text-secondary); background: #F3F4F6; padding: 2px 8px; border-radius: 4px; }
-        .rec-specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 8px; background: #F9FAFB; padding: 10px; border-radius: 6px; margin: 10px 0; font-size: 0.85rem; }
-        .rec-features { font-size: 0.88rem; color: #4B5563; line-height: 1.5; }
+        .rec-title { font-size: 1.05rem; font-weight: bold; color: #78350F; }
+        .rec-brand { font-size: 0.8rem; color: var(--text-secondary); background: #F3F4F6; padding: 2px 8px; border-radius: 4px; }
+        .rec-specs { display: grid; grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); gap: 6px; background: #F9FAFB; padding: 8px 10px; border-radius: 6px; margin: 8px 0; font-size: 0.82rem; }
+        .rec-features { font-size: 0.85rem; color: #4B5563; line-height: 1.5; }
         .tag-container { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-        .tag { font-size: 0.75rem; padding: 2px 8px; border-radius: 12px; font-weight: 500; }
+        .tag { font-size: 0.72rem; padding: 2px 8px; border-radius: 12px; font-weight: 500; }
         .tag-orange { background: #FFEDD5; color: #9A3412; }
         .tag-green { background: #D1FAE5; color: #065F46; }
         footer { text-align: center; padding: 20px; font-size: 0.85rem; color: var(--text-secondary); margin-top: 20px; border-top: 1px solid var(--border-color); }
@@ -71,8 +76,8 @@
 <body>
     <div class="container">
         <header>
-            <h1>🩺 第五期慢性腎臟病 (CKD Stage 5 / 5D) 口服營養品智慧推導系統</h1>
-            <p>臨床決策支援工具｜整合個人身體指標、透析狀態、血糖及血清電解質數據自動推導首選營養品</p>
+            <h1>🩺 第五期慢性腎臟病 (CKD Stage 5 / 5D) 口服營養品智慧匹配與跨品牌組合系統</h1>
+            <p>臨床決策支援工具｜整合身體指標、透析狀態與檢驗數據，提供多品牌平行比較與「跨品牌組合配方」調配建議</p>
         </header>
 
         <div class="quick-actions">
@@ -126,32 +131,33 @@
 
             <div class="output-section">
                 <div id="deduction-summary-container"></div>
+                <div id="combo-recommendation-container"></div>
                 <div class="card">
                     <div class="card-title">⚠️ 臨床營養警訊與評估提示</div>
                     <div id="alert-container"></div>
                 </div>
                 <div class="card">
-                    <div class="card-title">🏆 臨床匹配口服營養品評分排名</div>
-                    <div id="recommendation-container"></div>
+                    <div class="card-title">📊 適用口服營養單品多品牌平行比較</div>
+                    <div id="recommendation-container" class="rec-grid"></div>
                 </div>
             </div>
         </div>
 
         <footer>
-            <p>臨床備忘：本評估系統依據 KDOQI 2020 及衛福部特殊營養食品規範開發。實際處方請由醫師與營養師依個案飲食紀錄評估。</p>
+            <p>臨床備忘：本系統依據 KDOQI 指引與衛福部特殊營養食品規範開發。未透析合併糖尿病時，優先採用低蛋白/低電解質且具低GI/緩釋醣結構之腎臟專用配方。混搭組合配方可提供熱量精準補充而不增加蛋白質負擔。</p>
         </footer>
     </div>
 
     <script>
         const PRODUCTS = [
-            { id: 'suplena', name: '亞培 勝補納 (Suplena)', brand: '亞培 (Abbott)', type: 'ndd', dmFriendly: true, kcal: 425, volume: '237 mL', density: '1.8 Kcal/mL', protein: 10.6, proteinRatio: '10%', na: 190, k: 270, p: 170, features: 'CarbSteady 緩釋醣類低GI配方、含膳食纖維、低蛋白(10.6g)、低磷鈉鉀。', tags: ['未透析首選', '糖尿病/低GI', '高熱量密度'] },
-            { id: 'fresubin_renal', name: '費森尤斯卡比 倍速力 (Fresubin Renal)', brand: '費森尤斯卡比', type: 'ndd', dmFriendly: true, kcal: 400, volume: '200 mL', density: '2.0 Kcal/mL', protein: 6.0, proteinRatio: '6%', na: 140, k: 140, p: 110, features: '2.0 Kcal/mL 濃縮超高熱量、極低蛋白質(6g)、深海魚油(EPA/DHA)、高MUFA。', tags: ['極低蛋白質', '嚴格限水', '魚油抗發炎'] },
-            { id: 'shenxuan1', name: '補體素 慎選1 (未洗腎適用)', brand: '思耐德', type: 'ndd', dmFriendly: true, kcal: 425, volume: '237 mL', density: '1.8 Kcal/mL', protein: 10.6, proteinRatio: '10%', na: 175, k: 250, p: 160, features: '優質雙蛋白(乳清+黃豆)、無糖低GI、添加維生素D3、高水溶性纖維。', tags: ['雙優質蛋白', '高MUFA', '低GI無糖'] },
-            { id: 'yinengchong', name: '益富 易能充 (粉劑沖泡)', brand: '益富', type: 'ndd', dmFriendly: false, kcal: 200, volume: '50 g/包', density: '高熱量補充', protein: 0.8, proteinRatio: '<2%', na: 113, k: 108, p: 42, features: '超低蛋白質(0.8g/包)、純熱量與脂肪組合、極低磷鈉鉀。', tags: ['超低蛋白質', '純熱量點心', '極低磷鉀'] },
-            { id: 'nepro', name: '亞培 普寧勝 (Nepro)', brand: '亞培 (Abbott)', type: 'dd', dmFriendly: true, kcal: 425, volume: '237 mL', density: '1.8 Kcal/mL', protein: 19.1, proteinRatio: '18%', na: 250, k: 270, p: 170, features: '高優質蛋白(19.1g)、CarbSteady 低GI慢消化醣類、強化 L-肉鹼與牛磺酸。', tags: ['透析首選', '高蛋白19.1g', '糖尿病/低GI'] },
-            { id: 'shengli2', name: '補體素 勝力2 (洗腎透析適用)', brand: '思耐德', type: 'dd', dmFriendly: true, kcal: 425, volume: '237 mL', density: '1.8 Kcal/mL', protein: 19.1, proteinRatio: '18%', na: 230, k: 230, p: 150, features: '高乳清蛋白(19.1g)、添加藻油 Omega-3、維生素D3、低鈉磷鉀。', tags: ['透析高蛋白', '藻油Omega-3', '低磷鈉鉀'] },
-            { id: 'yuanqiqiang', name: '益富 元氣強 (高蛋白低鉀)', brand: '益富', type: 'dd', dmFriendly: false, kcal: 104, volume: '25 g/包', density: '高蛋白濃縮', protein: 8.4, proteinRatio: '32%', na: 107, k: 40.8, p: 86, features: '高蛋白質密度(32%)、極低鉀離子(僅40.8mg/包)、極低磷。', tags: ['透析蛋白補充', '極低鉀40.8mg'] },
-            { id: 'fresubin_protein', name: '費森尤斯卡比 倍速 (Fresubin Protein)', brand: '費森尤斯卡比', type: 'dd', dmFriendly: false, kcal: 300, volume: '200 mL', density: '1.5 Kcal/mL', protein: 20.0, proteinRatio: '27%', na: 120, k: 240, p: 160, features: '每瓶高達 20g 蛋白質、1.5 Kcal/mL、無纖維好消化，適合 PEW 個案。', tags: ['最高蛋白20g', '對抗PEW'] }
+            { id: 'fresubin_renal', name: '費森尤斯卡比 倍速力 (Fresubin Renal)', brand: '費森尤斯卡比', type: 'ndd', kcal: 400, volume: '200 mL', density: '2.0 Kcal/mL', protein: 6.0, proteinRatio: '6%', na: 140, k: 140, p: 110, clinicalFocus: '極低蛋白質 (6g/瓶) + 濃縮超高熱量 (2.0 Kcal/mL)', features: '極低蛋白質、高單元不飽和脂肪(MUFA)、深海魚油(EPA/DHA)抗發炎。', tags: ['極低蛋白質6g', '濃縮高熱量2.0', '深海魚油EPA/DHA'] },
+            { id: 'suplena', name: '亞培 勝補納 (Suplena)', brand: '亞培 (Abbott)', type: 'ndd', kcal: 425, volume: '237 mL', density: '1.8 Kcal/mL', protein: 10.6, proteinRatio: '10%', na: 190, k: 270, p: 170, clinicalFocus: '低蛋白質 (10.6g) + CarbSteady 低GI緩釋醣管理', features: 'CarbSteady 慢消化醣類低GI配方、含水溶性膳食纖維及 MUFA。', tags: ['低蛋白質10.6g', 'CarbSteady低GI', '含膳食纖維'] },
+            { id: 'shenxuan1', name: '思耐德 補體素慎選1 (未洗腎適用)', brand: '思耐德', type: 'ndd', kcal: 425, volume: '237 mL', density: '1.8 Kcal/mL', protein: 10.6, proteinRatio: '10%', na: 175, k: 250, p: 160, clinicalFocus: '優質雙蛋白 (乳清+黃豆) + 無糖低GI配方', features: '乳清蛋白與黃豆蛋白優質雙來源、高單元不飽和脂肪(MUFA)。', tags: ['優質雙蛋白', '高MUFA', '無糖低GI'] },
+            { id: 'yinengchong', name: '益富 易能充 (粉劑沖泡)', brand: '益富', type: 'ndd', kcal: 200, volume: '50 g/包', density: '高熱量點心補充', protein: 0.8, proteinRatio: '<2%', na: 113, k: 108, p: 42, clinicalFocus: '超低蛋白質 (0.8g/包) + 純熱量彈性調配', features: '蛋白質含量極低(<1g)，提供純粹熱量與極低電解質。', tags: ['超低蛋白質<1g', '純熱量點心', '極低電解質'] },
+            { id: 'shengli2', name: '思耐德 補體素勝力2 (洗腎透析適用)', brand: '思耐德', type: 'dd', kcal: 425, volume: '237 mL', density: '1.8 Kcal/mL', protein: 19.1, proteinRatio: '18%', na: 230, k: 230, p: 150, clinicalFocus: '高乳清蛋白 (19.1g) + 藻油 Omega-3', features: '高比例乳清蛋白易吸收、添加植物性藻油 Omega-3、維生素D3。', tags: ['高乳清蛋白19.1g', '藻油Omega-3', '低磷鈉鉀'] },
+            { id: 'nepro', name: '亞培 普寧勝 (Nepro)', brand: '亞培 (Abbott)', type: 'dd', kcal: 425, volume: '237 mL', density: '1.8 Kcal/mL', protein: 19.1, proteinRatio: '18%', na: 250, k: 270, p: 170, clinicalFocus: '高蛋白質 (19.1g) + CarbSteady 低GI + 肉鹼牛磺酸', features: '高蛋白濃縮熱量、CarbSteady 低GI、強化 L-肉鹼與牛磺酸。', tags: ['高蛋白19.1g', 'CarbSteady低GI', '含肉鹼牛磺酸'] },
+            { id: 'fresubin_protein', name: '費森尤斯卡比 倍速 (Fresubin Protein)', brand: '費森尤斯卡比', type: 'dd', kcal: 300, volume: '200 mL', density: '1.5 Kcal/mL', protein: 20.0, proteinRatio: '27%', na: 120, k: 240, p: 160, clinicalFocus: '最高蛋白質密度 (20g/200mL, 27%)', features: '每瓶提供 20g 蛋白質，蛋白熱量比 27%，適合 PEW 嚴重個案。', tags: ['最高蛋白20g', '高蛋白比27%', '對抗PEW'] },
+            { id: 'yuanqiqiang', name: '益富 元氣強 (高蛋白極低鉀)', brand: '益富', type: 'dd', kcal: 104, volume: '25 g/包', density: '高蛋白濃縮點心', protein: 8.4, proteinRatio: '32%', na: 107, k: 40.8, p: 86, clinicalFocus: '高蛋白質密度 (32%) + 極低鉀離子 (40.8mg/包)', features: '蛋白質比例 32%，鉀離子極低（僅 40.8 mg），濃縮補充。', tags: ['蛋白密度32%', '極低鉀40.8mg', '極低磷'] }
         ];
 
         function calculateAll() {
@@ -196,25 +202,26 @@
 
             const alerts = [];
             if (dialysis === 'ndd') {
-                alerts.push({ type: 'amber', text: '<b>未透析 (NDD-CKD) 提醒：</b>採低蛋白質飲食 (0.6-0.8 g/kg/天)，延緩進入透析時間。選用【未洗腎專用低蛋白配方】。' });
+                alerts.push({ type: 'amber', text: '<b>未透析 (NDD-CKD) 衛教原則：</b>採低蛋白質飲食 (0.6-0.8 g/kg/天)。選用【未透析專用低蛋白低電解質配方】。' });
             } else {
-                alerts.push({ type: 'green', text: '<b>透析 (DD-CKD) 提醒：</b>透析會流失蛋白質及胺基酸，需提升蛋白質至 1.2-1.4 g/kg/天。選擇【透析專用高蛋白配方】。' });
+                alerts.push({ type: 'green', text: '<b>透析 (DD-CKD) 衛教原則：</b>提升蛋白質攝取至 1.2-1.4 g/kg/天。採用【透析專用高蛋白配方】。' });
             }
             if (dm === 'yes' || hba1c >= 7.0) {
-                alerts.push({ type: 'amber', text: `<b>血糖偏高/糖尿病 (HbA1c: ${hba1c}%) 警訊：</b>建議優先選擇具 CarbSteady/低GI 緩釋醣結構配方。` });
+                alerts.push({ type: 'amber', text: `<b>合併糖尿病/血糖偏高 (HbA1c: ${hba1c}%) 營養師提醒：</b>優先選用『低蛋白/低電解質且具低GI/緩釋醣結構之腎臟專用配方』。` });
             }
             if (alb < 3.8) {
-                alerts.push({ type: 'red', text: `<b>白蛋白偏低 (Serum Albumin: ${alb} g/dL)：</b>提示有 PEW 或營養不良風險！需補足熱量與蛋白質。` });
+                alerts.push({ type: 'red', text: `<b>血清白蛋白偏低 (Albumin: ${alb} g/dL)：</b>提示有 PEW 風險！需重視補足總熱量與優質蛋白質。` });
             }
             if (k > 5.0) {
-                alerts.push({ type: 'red', text: `<b>高血鉀警戒 (Serum K: ${k} mEq/L)：</b>嚴格限制鉀離子！選擇每份鉀 < 200 mg 之極低鉀營養品。` });
+                alerts.push({ type: 'red', text: `<b>高血鉀警戒 (Serum K: ${k} mEq/L)：</b>嚴格控鉀！優先考量每份鉀 < 200 mg 之極低鉀產品。` });
             }
             if (p > 5.5) {
-                alerts.push({ type: 'red', text: `<b>高血磷警戒 (Serum P: ${p} mg/dL)：</b>選擇低磷配方（磷 < 170 mg/份），請【隨餐配合磷結合劑】。` });
+                alerts.push({ type: 'red', text: `<b>高血磷警戒 (Serum P: ${p} mg/dL)：</b>選用低磷配方（磷 < 170 mg/份），並請【隨餐配合磷結合劑】。` });
             }
 
             renderAlerts(alerts);
-            rankAndRenderRecommendations(dialysis, dm, hba1c, alb, k, p, energyMin, energyMax);
+            renderMultiBrandRecommendations(dialysis, dm, hba1c, alb, k, p, energyMin);
+            renderComboRecommendations(dialysis, k, alb);
         }
 
         function renderAlerts(alerts) {
@@ -228,74 +235,95 @@
             });
         }
 
-        function rankAndRenderRecommendations(dialysis, dm, hba1c, alb, k, p, energyMin, energyMax) {
+        function renderMultiBrandRecommendations(dialysis, dm, hba1c, alb, k, p, energyMin) {
             const isNDD = (dialysis === 'ndd');
             const isDM = (dm === 'yes' || hba1c >= 7.0);
             const isLowAlb = (alb < 3.8);
-            const isHighK = (k > 5.0);
-            const isHighP = (p > 5.5);
 
-            let matchingList = PRODUCTS.filter(item => isNDD ? item.type === 'ndd' : item.type === 'dd')
-                                       .map(item => ({ ...item, score: 0, reasons: [] }));
-
-            matchingList.forEach(item => {
-                item.score += 50;
-                if (isNDD) item.reasons.push('符合未透析 (NDD) 低蛋白質(<=10.6g)需求');
-                else item.reasons.push('符合已透析 (DD) 高蛋白質(>=19g)需求');
-
-                if (isDM && item.dmFriendly) { item.score += 25; item.reasons.push('具備 CarbSteady/低GI 緩釋醣配方'); }
-                if (!isNDD && isLowAlb && item.protein >= 19.0) { item.score += 20; item.reasons.push('高蛋白密度 (>=19g) 改善 PEW 狀態'); }
-                if (isNDD && isLowAlb && item.kcal >= 400) { item.score += 15; item.reasons.push('濃縮高熱量 (>=400kcal) 補足能量缺口'); }
-                if (isHighK && item.k <= 200) { item.score += 20; item.reasons.push('極低鉀離子 (<200mg/份)'); }
-                if (isHighP && item.p <= 160) { item.score += 15; item.reasons.push('極低磷離子 (<=160mg/份)'); }
-            });
-
-            matchingList.sort((a, b) => b.score - a.score);
-
-            const topPick = matchingList[0];
-            const secondPick = matchingList;
-            let dailyCans = Math.max(1, Math.round((energyMin * 0.35) / topPick.kcal));
-            if (topPick.kcal < 200) dailyCans = 1;
+            let list = PRODUCTS.filter(item => isNDD ? item.type === 'ndd' : item.type === 'dd');
 
             document.getElementById('deduction-summary-container').innerHTML = `
                 <div class="deduction-card">
                     <div class="deduction-header">
-                        <span class="deduction-badge">🎯 智慧推導最推薦營養品結論</span>
-                        <div class="deduction-product-name">🌟 ${topPick.name}</div>
+                        <span class="deduction-badge">🎯 臨床處方邏輯與品牌選擇指引</span>
+                        <div class="deduction-title">${isNDD ? '未透析 (NDD) 專用低蛋白系列比較' : '已透析 (DD) 專用高蛋白系列比較'}</div>
                     </div>
                     <div class="deduction-body">
-                        <p><b>【臨床推導推理理由】</b> ${topPick.reasons.join('；')}。</p>
-                        <p><b>【建議臨床處方攝取量】</b> 建議每日補充 <b>${dailyCans} ${topPick.kcal < 200 ? '包' : '罐/瓶'}</b>（約提供 ${topPick.kcal * dailyCans} Kcal 熱量及 ${(topPick.protein * dailyCans).toFixed(1)} g 蛋白質），作為口飲點心補充。</p>
-                        <p><b>【次優備選配方】</b> ${secondPick ? secondPick.name : '無'}。</p>
+                        <p><b>${isNDD ? '未透析策略：' : '已透析策略：'}</b> ${isNDD ? '控蛋白 (0.6-0.8g/kg) + 低電解質 + 足熱量' : '高蛋白 (1.2-1.4g/kg) + 低電解質 + 補流失'}</p>
+                        <p><b>【單品補充劑量建議】</b> 每日作為點心或餐間補充約 <b>1～2 罐/包</b>（約補充 $200\sim850\text{ Kcal}$），實際罐數請依個案正餐紀錄調整。</p>
                     </div>
                 </div>
             `;
 
             const container = document.getElementById('recommendation-container');
             container.innerHTML = '';
-            matchingList.forEach((item, index) => {
-                const isTop = (index === 0);
+            list.forEach(item => {
+                let isHighlight = false;
+                if (isNDD && item.id === 'fresubin_renal' && isLowAlb) isHighlight = true;
+                if (isNDD && item.id === 'suplena' && isDM) isHighlight = true;
+
                 const card = document.createElement('div');
-                card.className = `rec-card ${isTop ? 'top-pick' : ''}`;
+                card.className = `rec-card ${isHighlight ? 'highlight' : ''}`;
                 let tagsHTML = item.tags.map(t => `<span class="tag tag-orange">${t}</span>`).join('');
-                if (item.dmFriendly) tagsHTML += `<span class="tag tag-green">醣管理低GI</span>`;
 
                 card.innerHTML = `
-                    ${isTop ? '<div class="top-badge">🌟 首選推導第一名 (' + item.score + '分)</div>' : '<div style="position:absolute; top:10px; right:15px; font-size:0.8rem; color:#888;">匹配分數: ' + item.score + '分</div>'}
                     <div class="rec-header">
                         <div class="rec-title">${item.name}</div>
                         <div class="rec-brand">${item.brand}</div>
                     </div>
+                    <div style="font-size:0.88rem; font-weight:bold; color:#B45309; margin-bottom:4px;">📌 臨床定位：${item.clinicalFocus}</div>
                     <div class="rec-specs">
                         <span>🔥 熱量: ${item.kcal} Kcal (${item.volume})</span>
                         <span>🥩 蛋白質: ${item.protein} g (${item.proteinRatio})</span>
                         <span>🧂 鈉/鉀/磷: ${item.na}/${item.k}/${item.p} mg</span>
                     </div>
-                    <div class="rec-features">${item.features}</div>
+                    <div class="rec-features"><b>配方特色：</b>${item.features}</div>
                     <div class="tag-container">${tagsHTML}</div>
                 `;
                 container.appendChild(card);
             });
+        }
+
+        function renderComboRecommendations(dialysis, k, alb) {
+            const isNDD = (dialysis === 'ndd');
+            const container = document.getElementById('combo-recommendation-container');
+
+            let comboHTML = "";
+            if (isNDD) {
+                comboHTML = `
+                    <div class="combo-card">
+                        <div class="combo-title">💡 臨床靈活應用：跨品牌「高熱量・精準控蛋白」雙配方組合建議</div>
+                        <div style="font-size:0.92rem; color:#064E3B; line-height:1.6;">
+                            <p><b>組合處方公式：【罐裝低蛋白腎臟配方 1罐】＋【益富 易能充 1包】</b></p>
+                            <p><b>範例分析（倍速力/勝補納/補體素慎選1 ＋ 易能充）：</b></p>
+                            <ul style="margin-left:20px; margin-top:4px;">
+                                <li><b>組合總熱量</b>：約 <b>600 ~ 625 Kcal</b>（一口氣補足高熱量缺口）</li>
+                                <li><b>組合總蛋白質</b>：僅 <b>6.8 ~ 11.4 g</b>（完美控制蛋白質，不增加含氮廢物負擔）</li>
+                                <li><b>組合總電解質</b>：鈉 $<288\text{mg}$ | 鉀 $<378\text{mg}$ | 磷 $<212\text{mg}$（安全性極高）</li>
+                            </ul>
+                            <p style="margin-top:6px; font-size:0.88rem; color:#047857;"><b>臨床價值：</b>當未透析患者熱量嚴重不足，若再多喝一罐標準低蛋白配方會導致蛋白質超標時，混搭「超低蛋白純熱量沖泡包（易能充）」是營養師衛教的最佳彈性選擇！</p>
+                        </div>
+                    </div>
+                `;
+            } else {
+                comboHTML = `
+                    <div class="combo-card">
+                        <div class="combo-title">💡 臨床靈活應用：跨品牌「高蛋白・極低鉀」透析雙配方組合建議</div>
+                        <div style="font-size:0.92rem; color:#064E3B; line-height:1.6;">
+                            <p><b>組合處方公式：【罐裝透析高蛋白配方 1罐】＋【益富 元氣強 1包】</b></p>
+                            <p><b>範例分析（補體素勝力2 / 普寧勝 ＋ 元氣強）：</b></p>
+                            <ul style="margin-left:20px; margin-top:4px;">
+                                <li><b>組合總熱量</b>：約 <b>529 Kcal</b></li>
+                                <li><b>組合總蛋白質</b>：高達 <b>27.5 g</b>（快速補足透析蛋白質流失與 PEW 缺口）</li>
+                                <li><b>組合總電解質</b>：鉀僅 <b>270.8 ~ 310.8 mg</b>（元氣強每包鉀僅 40.8mg，補蛋白不暴血鉀）</li>
+                            </ul>
+                            <p style="margin-top:6px; font-size:0.88rem; color:#047857;"><b>臨床價值：</b>當透析患者白蛋白偏低（PEW）需要補充大劑量蛋白質，但又擔心一般高蛋白補充品會拉高血鉀時，混搭極低鉀高蛋白沖泡包（元氣強）能在極小水分與低鉀安全下補充 27.5g 蛋白質！</p>
+                        </div>
+                    </div>
+                `;
+            }
+
+            container.innerHTML = comboHTML;
         }
 
         function loadSampleData(sampleType) {
