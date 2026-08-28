@@ -119,6 +119,14 @@
                                 <option value="pd">已透析 - 腹膜透析 (PD Stage 5D)</option>
                             </select>
                         </div>
+                        <div class="form-group" id="pd-protein-status-group" style="grid-column: span 2; display: none;">
+                            <label for="pd-protein-status">腹膜透析蛋白質需求分層</label>
+                            <select id="pd-protein-status" onchange="calculateAll()">
+                                <option value="stable">代謝穩定、營養狀態良好（1.0–1.2 g/kg/day）</option>
+                                <option value="protein_loss">考慮持續腹膜蛋白流失（1.2–1.3 g/kg/day）</option>
+                                <option value="catabolic">PEW、腹膜炎或高分解狀態（1.3–1.5 g/kg/day）</option>
+                            </select>
+                        </div>
                         <div class="form-group" style="grid-column: span 2;">
                             <label for="appetite">🚩 近期臨床狀況：【食慾下降或體重減輕】</label>
                             <select id="appetite" onchange="calculateAll()">
@@ -156,6 +164,7 @@
         </footer>
     </div>
 
+    <script src="nutrition-targets.js"></script>
     <script>
         const PRODUCTS = [
             // 未透析專用產品 (NDD)
@@ -314,6 +323,7 @@
             const weight = parseFloat(document.getElementById('weight').value) || 60;
 
             const dialysis = document.getElementById('dialysis').value;
+            const pdProteinStatus = document.getElementById('pd-protein-status').value;
             const appetite = document.getElementById('appetite').value;
             const dm = document.getElementById('dm').value;
             const hba1c = parseFloat(document.getElementById('hba1c').value) || 6.5;
@@ -331,17 +341,12 @@
             const energyMin = Math.round(ibw * 30);
             const energyMax = Math.round(ibw * 35);
 
-            let protMinG = 0, protMaxG = 0, specText = "";
-            if (dialysis === 'ndd') {
-                protMinG = (ibw * 0.6).toFixed(1); protMaxG = (ibw * 0.8).toFixed(1);
-                specText = "30~35 kcal | 0.6~0.8g";
-            } else if (dialysis === 'hd') {
-                protMinG = (ibw * 1.2).toFixed(1); protMaxG = (ibw * 1.4).toFixed(1);
-                specText = "30~35 kcal | 1.2~1.4g";
-            } else {
-                protMinG = (ibw * 1.2).toFixed(1); protMaxG = (ibw * 1.3).toFixed(1);
-                specText = "30~35 kcal | 1.2~1.3g";
-            }
+            document.getElementById('pd-protein-status-group').style.display = dialysis === 'pd' ? 'flex' : 'none';
+
+            const proteinTarget = getProteinTarget(dialysis, pdProteinStatus);
+            const protMinG = (ibw * proteinTarget.min).toFixed(1);
+            const protMaxG = (ibw * proteinTarget.max).toFixed(1);
+            const specText = `30~35 kcal | ${proteinTarget.label}`;
 
             document.getElementById('out-bmi-ibw').innerText = `${bmi} / ${ibw} kg`;
             document.getElementById('out-energy').innerText = `${energyMin} ~ ${energyMax} kcal/天`;
@@ -364,8 +369,18 @@
 
             if (dialysis === 'ndd') {
                 alerts.push({ type: 'amber', text: '<b>未透析 (NDD-CKD Stage 5) 衛教原則：</b>採低蛋白質飲食 (0.6-0.8 g/kg/天)。選用【未透析專用低蛋白低電解質配方】。' });
-            } else {
+            } else if (dialysis === 'hd') {
                 alerts.push({ type: 'green', text: '<b>透析 (DD-CKD Stage 5D) 衛教原則：</b>提升蛋白質攝取至 1.2-1.4 g/kg/天。採用【透析專用高蛋白配方】。' });
+            } else {
+                const pdStatusDescriptions = {
+                    stable: '代謝穩定、營養狀態良好',
+                    protein_loss: '考慮持續腹膜蛋白流失',
+                    catabolic: '合併 PEW、腹膜炎或高分解狀態'
+                };
+                alerts.push({
+                    type: pdProteinStatus === 'catabolic' ? 'red' : 'green',
+                    text: `<b>腹膜透析 (PD-CKD Stage 5D) 蛋白質目標：</b>${pdStatusDescriptions[pdProteinStatus]}，系統採 <b>${proteinTarget.min}-${proteinTarget.max} g/kg/天</b>。應依乾體重、蛋白流失、發炎狀態與營養評估個別調整。`
+                });
             }
 
             if (dm === 'yes' || hba1c >= 7.0) {
@@ -505,6 +520,7 @@
                 document.getElementById('age').value = 68; document.getElementById('gender').value = 'male';
                 document.getElementById('height').value = 168; document.getElementById('weight').value = 62;
                 document.getElementById('dialysis').value = 'ndd';
+                document.getElementById('pd-protein-status').value = 'stable';
                 document.getElementById('appetite').value = 'decreased';
                 document.getElementById('dm').value = 'yes';
                 document.getElementById('hba1c').value = 7.8; document.getElementById('alb').value = 3.9;
@@ -514,6 +530,7 @@
                 document.getElementById('age').value = 62; document.getElementById('gender').value = 'female';
                 document.getElementById('height').value = 158; document.getElementById('weight').value = 48;
                 document.getElementById('dialysis').value = 'hd';
+                document.getElementById('pd-protein-status').value = 'stable';
                 document.getElementById('appetite').value = 'decreased';
                 document.getElementById('dm').value = 'no';
                 document.getElementById('hba1c').value = 5.9; document.getElementById('alb').value = 3.2;
@@ -527,6 +544,7 @@
             document.getElementById('age').value = 65; document.getElementById('gender').value = 'male';
             document.getElementById('height').value = 165; document.getElementById('weight').value = 60;
             document.getElementById('dialysis').value = 'ndd';
+            document.getElementById('pd-protein-status').value = 'stable';
             document.getElementById('appetite').value = 'decreased';
             document.getElementById('dm').value = 'no';
             document.getElementById('hba1c').value = 6.5; document.getElementById('alb').value = 4.0;

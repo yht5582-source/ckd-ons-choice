@@ -22,9 +22,11 @@
 |---|---:|---:|
 | CKD Stage 5，尚未透析（NDD） | 30–35 kcal/kg IBW/day | 0.6–0.8 g/kg IBW/day |
 | CKD Stage 5D，血液透析（HD） | 30–35 kcal/kg IBW/day | 1.2–1.4 g/kg IBW/day |
-| CKD Stage 5D，腹膜透析（PD） | 30–35 kcal/kg IBW/day | 1.2–1.3 g/kg IBW/day |
+| CKD Stage 5D，腹膜透析（PD），代謝穩定且營養良好 | 30–35 kcal/kg IBW/day | 1.0–1.2 g/kg IBW/day |
+| CKD Stage 5D，腹膜透析（PD），考慮持續腹膜蛋白流失 | 30–35 kcal/kg IBW/day | 1.2–1.3 g/kg IBW/day |
+| CKD Stage 5D，腹膜透析（PD），合併 PEW、腹膜炎或高分解狀態 | 30–35 kcal/kg IBW/day | 1.3–1.5 g/kg IBW/day |
 
-以上為目前程式內建的起始估算值。實際需求應依年齡、活動量、乾體重、殘餘腎功能、透析充分性、發炎或感染、分解代謝、糖尿病控制、腹膜透析葡萄糖吸收及營養狀態個別調整。
+腹膜透析分層以 KDOQI 2020 對代謝穩定患者的 1.0–1.2 g/kg/day 為起點；考慮持續腹膜蛋白流失時採 1.2–1.3 g/kg/day；合併 PEW、腹膜炎或高分解狀態時，才個別提高至 1.3–1.5 g/kg/day。以上為程式內建的起始估算值，並非固定處方。實際需求應依年齡、活動量、乾體重或慣常體重、肥胖狀態、殘餘腎功能、透析充分性、發炎或感染、分解代謝、糖尿病控制、腹膜透析葡萄糖吸收及營養狀態個別調整。
 
 ## 輸入資料
 
@@ -32,6 +34,7 @@
 
 - 年齡、性別、身高、實際體重
 - 透析狀態：未透析、血液透析、腹膜透析
+- 腹膜透析蛋白質需求分層：代謝穩定、持續腹膜蛋白流失、PEW／腹膜炎／高分解狀態
 - 食慾與近期體重變化
 - 糖尿病狀態與 HbA1c
 - Albumin、Na、K、Ca、P
@@ -82,11 +85,20 @@ http://localhost:8000
 
 ```text
 .
-├── index.html   # 完整介面、樣式、產品資料與計算邏輯
-└── README.md    # 專案說明
+├── index.html                    # 完整介面、樣式、產品資料與主要計算流程
+├── nutrition-targets.js          # 透析模式與 PD 狀態的蛋白質目標分層
+├── tests/
+│   └── nutrition-targets.test.js # 蛋白質目標自動化測試
+└── README.md                     # 專案說明
 ```
 
-目前所有 HTML、CSS、JavaScript 與產品資料均集中在 `index.html`，不需要安裝額外套件。
+專案不需要安裝額外套件。蛋白質目標的分層邏輯獨立放在 `nutrition-targets.js`，方便測試及後續更新。
+
+執行自動化測試：
+
+```bash
+node --test tests/nutrition-targets.test.js
+```
 
 ## 產品資料維護
 
