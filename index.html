@@ -94,7 +94,7 @@
         }
         footer { text-align: center; padding: 20px; font-size: 0.85rem; color: var(--text-secondary); margin-top: 20px; border-top: 1px solid var(--border-color); }
     </style>
-    <link rel="stylesheet" href="teach.css?v=2.1">
+    <link rel="stylesheet" href="teach.css?v=2.2">
 </head>
 <body>
     <div class="container">
@@ -136,9 +136,9 @@
                     <div class="calc-output-box">
                         <div class="calc-output-grid">
                             <div class="calc-item"><span class="label">BMI / 理想體重 (IBW)</span><span class="value" id="out-bmi-ibw">22.0 / 59.5 kg</span></div>
-                            <div class="calc-item"><span class="label">建議每日總熱量</span><span class="value" id="out-energy">1800~2100 kcal</span></div>
-                            <div class="calc-item"><span class="label">建議每日蛋白質需求</span><span class="value" id="out-protein">36~48 g</span></div>
-                            <div class="calc-item"><span class="label">熱量/蛋白基準</span><span class="value" id="out-target-spec">30~35 kcal | 0.6~0.8g</span></div>
+                            <div class="calc-item"><span class="label">建議每日總熱量</span><span class="value" id="out-energy">1488~2083 kcal</span></div>
+                            <div class="calc-item"><span class="label">建議每日蛋白質需求</span><span class="value" id="out-protein">32.7~35.7 g</span></div>
+                            <div class="calc-item"><span class="label">熱量/蛋白基準</span><span class="value" id="out-target-spec">25~35 kcal | 0.55~0.60g</span></div>
                         </div>
                     </div>
                 </div>
@@ -197,15 +197,15 @@
 
         <section id="view-cases" hidden>
             <h2 class="view-title">示範病例</h2>
-            <p class="view-intro">六位都是虛構病人。表格由決策工具即時算出，按「帶入工具」可繼續調整。內文會分開標示「工具規則」與指引條文，兩者不同時也會直接說明。</p>
-            <div class="data-note"><b>產品數值請先核對標示：</b>本頁內建值尚未逐項對照最新標示，病例與考題的計算都以內建值為準。已知差異：普寧勝鉀 270 mg（原廠資料 250 mg）；「倍速」此處為鈉 120、鉀 240、磷 160 mg，而另一查證來源的倍速 Supportan 為癌症配方，鈉 95、鉀 256、磷 240 mg；通路資料的勝力 2 為約 450 kcal、20.2 g。</div>
+            <p class="view-intro">六位都是虛構病人。表格由決策工具即時算出，按「帶入工具」可繼續調整。內文會分開標示「工具規則」與指引條文。</p>
+            <div class="data-note"><b>產品數值：</b>勝力 2、慎選 1 與兩款倍速力已於 2026-11-01 對照原廠標示。普寧勝、勝補納、易能充、元氣強採本系列 ONS 工具於 2026-10-04 查證的原廠資料。標示可能改版，處方前請再核對。</div>
             <div id="case-list"></div>
             <div class="source-list-box"><h3>參考資料</h3><ul class="source-list"></ul></div>
         </section>
 
         <section id="view-quiz" hidden>
             <h2 class="view-title">考題</h2>
-            <p class="view-intro">基礎 10 題、高階 10 題。高階題包含多步驟計算、工具與指引的差異，以及工具的盲點。作答後立即顯示解析，重新整理頁面就會清空。</p>
+            <p class="view-intro">基礎 10 題、高階 10 題。高階題包含多步驟計算、指引之間的差異，以及工具的盲點。作答後立即顯示解析，重新整理頁面就會清空。</p>
             <div class="quiz-bar">
                 <div id="quiz-filter" class="quiz-filter">
                     <button type="button" data-filter="全部" aria-pressed="true">全部</button>
@@ -231,11 +231,11 @@
 
         <footer>
             <p>臨床備忘：本系統依據 KDOQI 指引與衛福部特殊營養食品規範開發。食慾下降或體重減輕個案優先推薦高能量密度液狀濃縮配方；食慾正常個案可優先推薦粉狀配方作為正餐點心彈性補充。實際處方請由營養師評估。產品營養標示可能改版，使用前請核對原廠最新資料。</p>
-            <p>v2.1｜2026-11-01</p>
+            <p>v2.2｜2026-11-01</p>
         </footer>
     </div>
 
-    <script src="nutrition-targets.js?v=2.1"></script>
+    <script src="nutrition-targets.js?v=2.2"></script>
     <script>
         const E = window.CKDONS;
         const $ = id => document.getElementById(id);
@@ -244,7 +244,7 @@
         function readState() {
             const dialysis = $('dialysis').value;
             const pdProteinStatus = $('pd-protein-status').value;
-            const proteinTarget = E.getProteinTarget(dialysis, pdProteinStatus);
+            const proteinTarget = E.getProteinTarget(dialysis, pdProteinStatus, $('dm').value);
             const body = E.computeBody($('gender').value, val('height'), val('weight'));
             return {
                 age: val('age'),
@@ -274,7 +274,7 @@
                 $('out-energy').innerText = '—';
                 $('out-protein').innerText = '—';
             }
-            $('out-target-spec').innerText = `30~35 kcal | ${s.proteinTarget.label}`;
+            $('out-target-spec').innerText = `25~35 kcal | ${s.proteinTarget.label}`;
 
             renderAlerts(E.buildAlerts(s));
             renderMultiBrandRecommendations(s);
@@ -315,7 +315,7 @@
                         <div class="deduction-title">${isNDD ? '未透析 (NDD) 專用低蛋白系列比較' : '已透析 (DD) 專用高蛋白系列比較'}</div>
                     </div>
                     <div class="deduction-body">
-                        <p><b>【劑型選擇建議】</b> ${isDecreasedAppetite ? '<b>【優先推薦液狀濃縮配方】</b>因個案有食慾下降或體重減輕，一罐約 300-425 Kcal 之濃縮液體可快速補足熱量與蛋白質缺口。' : '<b>【優先推薦粉狀沖泡配方】</b>因個案食慾正常，粉劑可作為正餐之外點心靈活調配沖泡補充，不影響正餐進食量。'}</p>
+                        <p><b>【劑型選擇建議】</b> ${isDecreasedAppetite ? '<b>【優先推薦液狀濃縮配方】</b>因個案有食慾下降或體重減輕，一罐約 300-450 Kcal 之濃縮液體可快速補足熱量與蛋白質缺口。' : '<b>【優先推薦粉狀沖泡配方】</b>因個案食慾正常，粉劑可作為正餐之外點心靈活調配沖泡補充，不影響正餐進食量。'}</p>
                         <p><b>【補充劑量】</b> 每日作為點心或餐間補充約 <b>1～2 罐/包</b>，請依個案正餐進食紀錄調整${isNDD ? '，並確認 ONS 蛋白質加上正餐不超過每日目標' : ''}。</p>
                     </div>
                 </div>
@@ -340,7 +340,7 @@
                             <span>🧂 鈉/鉀/磷: ${item.na}/${item.k}/${item.p} mg</span>
                         </div>
                         ${shareHTML}
-                        <div class="rec-features"><b>配方特色：</b>${item.features}</div>
+                        <div class="rec-features"><b>配方特色：</b>${item.features} <a href="${item.src}" target="_blank" rel="noopener">產品資料</a></div>
                         <div class="tag-container">${electrolyteTags(item, s)}${tagsHTML}</div>
                     </div>
                 `;
@@ -400,7 +400,7 @@
 
         document.addEventListener('DOMContentLoaded', calculateAll);
     </script>
-    <script src="teach-content.js?v=2.1"></script>
-    <script src="teach.js?v=2.1"></script>
+    <script src="teach-content.js?v=2.2"></script>
+    <script src="teach.js?v=2.2"></script>
 </body>
 </html>

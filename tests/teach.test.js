@@ -55,6 +55,7 @@ test('quiz calculations hold in the engine', () => {
 
     const hd = E.computeNeeds(E.computeBody('female', 158, 48).ibw, E.getProteinTarget('hd'));
     assert.equal(QUIZ[1].options[QUIZ[1].answer], `${hd.proteinMin}–${hd.proteinMax} g`);
+    assert.equal(QUIZ[1].options[QUIZ[1].answer], '52.8–63.4 g');
 
     assert.equal(QUIZ[11].options[QUIZ[11].answer], '倍速力（6 g）');
     const list = E.productsFor('ndd');
@@ -62,26 +63,28 @@ test('quiz calculations hold in the engine', () => {
     assert.ok(42 + by('fresubin_renal').protein <= 49.3);
     assert.ok(42 + by('suplena').protein > 49.3);
     assert.ok(42 + by('shenxuan1').protein > 49.3);
+    assert.equal(by('shenxuan1').protein, 10.8);
 
     assert.equal(E.correctedCa(7.6, 3.0), 8.4);
     const lowCa = runCase(E, caseById('ndd-dm').base, { ca: 7.6, alb: 3.0 });
     assert.doesNotMatch(alertText(lowCa), /低血鈣/);
 
-    const hyperK = runCase(E, caseById('hd-pew').base, { k: 5.6 });
-    assert.equal(hyperK.ranked[0].id, 'shengli2');
-    assert.ok(hyperK.ranked[0].k >= E.LOW_K_PER_SERVING);
-    assert.deepEqual(E.productsFor('hd').filter((p) => p.k < E.LOW_K_PER_SERVING).map((p) => p.id), ['yuanqiqiang']);
+    const hyperK = runCase(E, caseById('ndd-dm').base, { k: 5.6 });
+    assert.equal(hyperK.ranked[0].id, 'fresubin_renal');
+    assert.equal(hyperK.ranked[0].k, E.LOW_K_PER_SERVING);
+    assert.deepEqual(E.productsFor('ndd').filter((p) => p.k < E.LOW_K_PER_SERVING).map((p) => p.id), ['yinengchong']);
 
     const dd = E.productsFor('hd');
     const a = dd.find((p) => p.id === 'shengli2');
     const b = dd.find((p) => p.id === 'yuanqiqiang');
-    assert.equal(a.kcal + b.kcal, 529);
-    assert.equal(Math.round((a.protein + b.protein) * 10) / 10, 27.5);
-    assert.equal(Math.round((a.k + b.k) * 10) / 10, 270.8);
-    assert.equal(a.p + b.p, 236);
+    assert.equal(a.kcal + b.kcal, 554);
+    assert.equal(Math.round((a.protein + b.protein) * 10) / 10, 28.6);
+    assert.equal(a.k + b.k, 231);
+    assert.equal(a.p + b.p, 258);
+    assert.equal(QUIZ[15].options[QUIZ[15].answer], '554 kcal、28.6 g、鉀 231 mg');
 
     const pd = E.computeNeeds(63, E.getProteinTarget('pd', 'stable'));
-    assert.deepEqual([pd.energyMin - 400, pd.energyMax - 400], [1490, 1805]);
+    assert.deepEqual([pd.energyMin - 400, pd.energyMax - 400], [1175, 1805]);
 });
 
 test('quiz rule statements hold in the engine', () => {
@@ -113,18 +116,19 @@ test('teaching claims in the cases hold in the engine', () => {
     const ibw = low.state.body.ibw;
     assert.equal(ibw, 51);
     assert.deepEqual([Math.round(ibw * 0.55 * 10) / 10, Math.round(ibw * 0.6 * 10) / 10], [28.1, 30.6]);
-    assert.deepEqual([ibw * 25, ibw * 35], [1275, 1785]);
+    assert.deepEqual([low.state.needs.energyMin, low.state.needs.energyMax], [1275, 1785]);
+    assert.equal(ibw * 0.8, 40.800000000000004);
 
     const pew = runCase(E, caseById('hd-pew').base);
     assert.equal(E.correctedCa(8.8, 3.2), 9.4);
     assert.equal(pew.state.body.bmi, 19.2);
-    assert.deepEqual([Math.round(52.8 * 1.0 * 10) / 10, Math.round(52.8 * 1.2 * 10) / 10], [52.8, 63.4]);
+    assert.deepEqual([pew.state.needs.proteinMin, pew.state.needs.proteinMax], [52.8, 63.4]);
     assert.equal(Math.round(52.8 * 22), 1162);
     assert.equal(Math.round(52.8 * 0.7), 37);
 
     assert.equal(E.correctedCa(7.8, 2.9), 8.7);
     const lowGI = E.productsFor('pd').filter((p) => p.lowGI).map((p) => p.id);
-    assert.deepEqual(lowGI, ['nepro']);
+    assert.deepEqual(lowGI, ['shengli2', 'nepro']);
 
     const obese = runCase(E, caseById('hd-hyperk').base);
     assert.equal(obese.state.body.pctIbw, 121);

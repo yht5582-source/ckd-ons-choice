@@ -22,13 +22,14 @@
 
 | 患者類型 | 系統預設熱量 | 系統預設蛋白質 |
 |---|---:|---:|
-| CKD Stage 5，尚未透析（NDD） | 30–35 kcal/kg IBW/day | 0.6–0.8 g/kg IBW/day |
-| CKD Stage 5D，血液透析（HD） | 30–35 kcal/kg IBW/day | 1.2–1.4 g/kg IBW/day |
-| CKD Stage 5D，腹膜透析（PD），代謝穩定且營養良好 | 30–35 kcal/kg IBW/day | 1.0–1.2 g/kg IBW/day |
-| CKD Stage 5D，腹膜透析（PD），考慮持續腹膜蛋白流失 | 30–35 kcal/kg IBW/day | 1.2–1.3 g/kg IBW/day |
-| CKD Stage 5D，腹膜透析（PD），合併 PEW、腹膜炎或高分解狀態 | 30–35 kcal/kg IBW/day | 1.3–1.5 g/kg IBW/day |
+| CKD Stage 5，尚未透析（NDD），無糖尿病 | 25–35 kcal/kg IBW/day | 0.55–0.60 g/kg IBW/day |
+| CKD Stage 5，尚未透析（NDD），糖尿病 | 25–35 kcal/kg IBW/day | 0.6–0.8 g/kg IBW/day |
+| CKD Stage 5D，血液透析（HD），代謝穩定 | 25–35 kcal/kg IBW/day | 1.0–1.2 g/kg IBW/day |
+| CKD Stage 5D，腹膜透析（PD），代謝穩定且營養良好 | 25–35 kcal/kg IBW/day | 1.0–1.2 g/kg IBW/day |
+| CKD Stage 5D，腹膜透析（PD），考慮持續腹膜蛋白流失 | 25–35 kcal/kg IBW/day | 1.2–1.3 g/kg IBW/day |
+| CKD Stage 5D，腹膜透析（PD），合併 PEW、腹膜炎或高分解狀態 | 25–35 kcal/kg IBW/day | 1.3–1.5 g/kg IBW/day |
 
-腹膜透析分層以 KDOQI 2020 對代謝穩定患者的 1.0–1.2 g/kg/day 為起點；考慮持續腹膜蛋白流失時採 1.2–1.3 g/kg/day；合併 PEW、腹膜炎或高分解狀態時，才個別提高至 1.3–1.5 g/kg/day。以上為程式內建的起始估算值，並非固定處方。實際需求應依年齡、活動量、乾體重或慣常體重、肥胖狀態、殘餘腎功能、透析充分性、發炎或感染、分解代謝、糖尿病控制、腹膜透析葡萄糖吸收及營養狀態個別調整。
+未透析與血液透析目標依 KDOQI 2020（3.0.1–3.0.3），熱量依 3.1.1，均以代謝穩定者為對象。腹膜透析分層以 KDOQI 2020 對代謝穩定患者的 1.0–1.2 g/kg/day 為起點；考慮持續腹膜蛋白流失時採 1.2–1.3 g/kg/day；合併 PEW、腹膜炎或高分解狀態時，才個別提高至 1.3–1.5 g/kg/day。以上為程式內建的起始估算值，並非固定處方。實際需求應依年齡、活動量、乾體重或慣常體重、肥胖狀態、殘餘腎功能、透析充分性、發炎或感染、分解代謝、糖尿病控制、腹膜透析葡萄糖吸收及營養狀態個別調整。
 
 ## 輸入資料
 
@@ -115,7 +116,7 @@ node --test tests/*.test.js
 - 每份熱量及蛋白質
 - 鈉、鉀、磷含量
 - 配方特色與臨床定位
-- 資料來源與查核日期
+- 資料來源（`src` 欄位）與查核日期
 
 產品改版或營養標示異動後，應同步修正所有比較、警訊與組合計算內容，避免顯示過期數據。
 

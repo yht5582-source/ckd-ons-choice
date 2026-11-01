@@ -4,8 +4,8 @@
         // 未透析專用產品 (NDD)
         {
             id: 'fresubin_renal',
-            name: '費森尤斯卡比 倍速力腎臟配方 (Fresubin Renal)',
-            shortName: '倍速力',
+            name: '費森尤斯卡比 倍速力 Fresubin Renal（未洗腎）',
+            shortName: '倍速力(未洗腎)',
             brand: '費森尤斯卡比',
             type: 'ndd',
             form: 'liquid',
@@ -14,12 +14,13 @@
             density: '2.0 Kcal/mL',
             protein: 6.0,
             proteinRatio: '6%',
-            na: 140,
-            k: 140,
+            na: 136,
+            k: 200,
             p: 110,
             lowGI: false,
+            src: 'https://www.fresenius-kabi-en-mall.com.tw/SalePage/Index/8808667',
             clinicalFocus: '【液狀濃縮】極低蛋白質 (6g/瓶) + 2.0 Kcal/mL 超高熱量',
-            features: '極低蛋白質、高單元不飽和脂肪(MUFA)、深海魚油(EPA/DHA)抗發炎，適合殘餘腎功能極低、食慾不佳或體重減輕需補充熱量之個案。',
+            features: '極低蛋白質、高單元不飽和脂肪(MUFA)、深海魚油(EPA/DHA)，適合未洗腎、食慾不佳或體重減輕需補充熱量之個案。',
             tags: ['液狀濃縮配方', '極低蛋白質6g', '濃縮高熱量2.0', '深海魚油EPA/DHA']
         },
         {
@@ -38,6 +39,7 @@
             k: 270,
             p: 170,
             lowGI: true,
+            src: 'https://www.family.abbott/tw-zh/adult/nepro/product/suplena-non-dialysis-formula.html',
             clinicalFocus: '【液狀濃縮】低蛋白質 (10.6g) + CarbSteady 低GI緩釋醣',
             features: 'CarbSteady 慢消化醣類低GI配方、含水溶性膳食纖維及單元不飽和脂肪酸，提供未透析食慾不佳且高血糖管理之選擇。',
             tags: ['液狀濃縮配方', '低蛋白質10.6g', 'CarbSteady低GI', '含膳食纖維']
@@ -49,18 +51,19 @@
             brand: '思耐得 (Sinaide)',
             type: 'ndd',
             form: 'liquid',
-            kcal: 425,
+            kcal: 446,
             volume: '237 mL',
-            density: '1.8 Kcal/mL',
-            protein: 10.6,
+            density: '1.9 Kcal/mL',
+            protein: 10.8,
             proteinRatio: '10%',
-            na: 175,
-            k: 250,
-            p: 160,
+            na: 236,
+            k: 300,
+            p: 188,
             lowGI: true,
-            clinicalFocus: '【液狀濃縮】優質雙蛋白 (乳清+黃豆) + 無糖低GI配方',
-            features: '乳清蛋白與黃豆蛋白優質雙來源、高單元不飽和脂肪(MUFA)、添加維生素D3與水溶性膳食纖維。',
-            tags: ['液狀濃縮配方', '優質雙蛋白', '高MUFA好油脂', '無糖低GI']
+            src: 'https://www.smad.com.tw/products/ckd',
+            clinicalFocus: '【液狀濃縮】低蛋白質 (10.8g) + 低糖配方',
+            features: '高單元不飽和脂肪(MUFA)、Omega-3、添加維生素D3與膳食纖維。鉀與磷在同類液劑中較高，高血鉀或高血磷時請留意。',
+            tags: ['液狀濃縮配方', '低蛋白質10.8g', '高MUFA好油脂', '低糖']
         },
         {
             id: 'yinengchong',
@@ -70,7 +73,7 @@
             type: 'ndd',
             form: 'powder',
             kcal: 200,
-            volume: '50 g/包',
+            volume: '45 g/包',
             density: '高熱量點心補充',
             protein: 0.8,
             proteinRatio: '<2%',
@@ -78,6 +81,7 @@
             k: 108,
             p: 42,
             lowGI: false,
+            src: 'https://www.enutrition.com.tw/products/kidney-powder-ckd',
             clinicalFocus: '【粉狀沖泡】超低蛋白質 (0.8g/包) + 純熱量彈性點心',
             features: '食慾正常時首選！蛋白質含量極低(<1g)，提供純粹熱量與適量優質脂肪，電解質極低，適合正餐之外彈性沖泡補充熱量。',
             tags: ['粉狀沖泡配方', '超低蛋白質<1g', '食慾正常點心首選', '極低電解質']
@@ -91,18 +95,19 @@
             brand: '思耐得 (Sinaide)',
             type: 'dd',
             form: 'liquid',
-            kcal: 425,
+            kcal: 450,
             volume: '237 mL',
-            density: '1.8 Kcal/mL',
-            protein: 19.1,
+            density: '1.9 Kcal/mL',
+            protein: 20.2,
             proteinRatio: '18%',
-            na: 230,
-            k: 230,
-            p: 150,
-            lowGI: false,
-            clinicalFocus: '【液狀濃縮】高乳清蛋白 (19.1g) + 藻油 Omega-3 (DHA/EPA)',
-            features: '高比例乳清蛋白易吸收、添加植物性藻油 Omega-3、維生素D3、高單元不飽和脂肪，適合食慾不佳、透析消瘦個案。',
-            tags: ['液狀濃縮配方', '高乳清蛋白19.1g', '藻油Omega-3', '低磷鈉鉀']
+            na: 190,
+            k: 190,
+            p: 172,
+            lowGI: true,
+            src: 'https://www.smad.com.tw/products/hd',
+            clinicalFocus: '【液狀濃縮】高蛋白質 (20.2g) + 藻油 Omega-3 + 低GI',
+            features: '低糖、低GI、含藻油 Omega-3、MCT、維生素D3與單元不飽和脂肪，適合食慾不佳、透析消瘦個案。',
+            tags: ['液狀濃縮配方', '高蛋白20.2g', '藻油Omega-3', '低GI', '鉀190mg']
         },
         {
             id: 'nepro',
@@ -117,17 +122,18 @@
             protein: 19.1,
             proteinRatio: '18%',
             na: 250,
-            k: 270,
+            k: 250,
             p: 170,
             lowGI: true,
+            src: 'https://www.family.abbott/tw-zh/adult/nepro/product/nepro-dialysis-formula.html',
             clinicalFocus: '【液狀濃縮】高蛋白質 (19.1g) + CarbSteady 低GI + 肉鹼牛磺酸',
             features: '高蛋白濃縮熱量、CarbSteady 低GI慢消化醣類、強化 L-肉鹼 (L-Carnitine) 與牛磺酸，補充透析流失。',
             tags: ['液狀濃縮配方', '高蛋白19.1g', 'CarbSteady低GI', '含肉鹼牛磺酸']
         },
         {
             id: 'fresubin_protein',
-            name: '費森尤斯卡比 倍速 (Fresubin Protein)',
-            shortName: '倍速',
+            name: '費森尤斯卡比 倍速力 Fresubin Protein Energy（洗腎）',
+            shortName: '倍速力(洗腎)',
             brand: '費森尤斯卡比',
             type: 'dd',
             form: 'liquid',
@@ -136,13 +142,14 @@
             density: '1.5 Kcal/mL',
             protein: 20.0,
             proteinRatio: '27%',
-            na: 120,
-            k: 240,
-            p: 160,
+            na: 116,
+            k: 292,
+            p: 240,
             lowGI: false,
+            src: 'https://www.fresenius-kabi-en-mall.com.tw/SalePage/Index/9124815',
             clinicalFocus: '【液狀濃縮】最高蛋白質密度 (20g/200mL, 27%)',
-            features: '每瓶提供高達 20g 蛋白質，蛋白熱量比高達 27%，無纖維好消化，適合食慾極差、高分解代謝與 PEW 嚴重個案。',
-            tags: ['液狀濃縮配方', '最高蛋白20g', '高蛋白比27%', '對抗PEW']
+            features: '小體積提供 20g 蛋白質，蛋白熱量比 27%。鉀 292 mg、磷 240 mg 在透析液劑中最高，高血鉀或高血磷時請留意。數值為熱帶水果口味標示，香草口味請另核對。',
+            tags: ['液狀濃縮配方', '蛋白20g', '高蛋白比27%', '小體積']
         },
         {
             id: 'yuanqiqiang',
@@ -152,17 +159,18 @@
             type: 'dd',
             form: 'powder',
             kcal: 104,
-            volume: '25 g/包',
+            volume: '24 g/包',
             density: '高蛋白濃縮點心',
             protein: 8.4,
             proteinRatio: '32%',
             na: 107,
-            k: 40.8,
+            k: 41,
             p: 86,
             lowGI: false,
-            clinicalFocus: '【粉狀沖泡】高蛋白質密度 (32%) + 極低鉀離子 (40.8mg/包)',
-            features: '食慾正常時首選！蛋白質比例高達 32%，鉀離子極低（僅 40.8 mg），適合透析間期食慾正常個案作為點心濃縮補充蛋白質。',
-            tags: ['粉狀沖泡配方', '蛋白密度32%', '食慾正常點心首選', '極低鉀40.8mg']
+            src: 'https://www.enutrition.com.tw/products/kidney-powder-dialysis',
+            clinicalFocus: '【粉狀沖泡】高蛋白質密度 (32%) + 極低鉀離子 (41mg/包)',
+            features: '食慾正常時首選！蛋白質比例高達 32%，鉀離子極低（僅 41 mg），適合透析間期食慾正常個案作為點心濃縮補充蛋白質。',
+            tags: ['粉狀沖泡配方', '蛋白密度32%', '食慾正常點心首選', '極低鉀41mg']
         }
     ];
 
@@ -170,13 +178,16 @@
     const LOW_K_PER_SERVING = 200;   // mg
     const LOW_P_PER_SERVING = 170;   // mg（< 170）
 
-    function getProteinTarget(dialysis, pdProteinStatus) {
+    // KDOQI 2020：未透析無糖尿病 0.55–0.60（3.0.1）、有糖尿病 0.6–0.8（3.0.2）；HD 代謝穩定 1.0–1.2（3.0.3）
+    function getProteinTarget(dialysis, pdProteinStatus, dm) {
         if (dialysis === 'ndd') {
-            return { min: 0.6, max: 0.8, label: '0.6~0.8g' };
+            return dm === 'yes'
+                ? { min: 0.6, max: 0.8, label: '0.6~0.8g' }
+                : { min: 0.55, max: 0.6, label: '0.55~0.60g' };
         }
 
         if (dialysis === 'hd') {
-            return { min: 1.2, max: 1.4, label: '1.2~1.4g' };
+            return { min: 1.0, max: 1.2, label: '1.0~1.2g' };
         }
 
         if (pdProteinStatus === 'catabolic') {
@@ -212,7 +223,7 @@
 
     function computeNeeds(ibw, proteinTarget) {
         return {
-            energyMin: Math.round(ibw * 30),
+            energyMin: Math.round(ibw * 25),
             energyMax: Math.round(ibw * 35),
             proteinMin: round1(ibw * proteinTarget.min),
             proteinMax: round1(ibw * proteinTarget.max)
@@ -295,9 +306,9 @@
         }
 
         if (isNDD) {
-            alerts.push({ type: 'amber', text: `<b>未透析 (NDD-CKD Stage 5) 衛教原則：</b>採低蛋白質飲食 (${s.proteinTarget.min}-${s.proteinTarget.max} g/kg/天)，並確保熱量足夠以免分解肌肉。選用【未透析專用低蛋白低電解質配方】。` });
+            alerts.push({ type: 'amber', text: `<b>未透析 (NDD-CKD Stage 5) 衛教原則：</b>採低蛋白質飲食 (${s.proteinTarget.min}-${s.proteinTarget.max} g/kg/天，${s.dm === 'yes' ? '糖尿病' : '無糖尿病'}目標)，並確保熱量足夠以免分解肌肉。選用【未透析專用低蛋白低電解質配方】。<b>此目標僅適用代謝穩定者；急性疾病、感染或高分解等代謝不穩定時不應開低蛋白飲食，衰弱或肌少症長者可考慮提高目標。</b>` });
         } else if (s.dialysis === 'hd') {
-            alerts.push({ type: 'green', text: `<b>血液透析 (HD-CKD Stage 5D) 衛教原則：</b>提升蛋白質攝取至 ${s.proteinTarget.min}-${s.proteinTarget.max} g/kg/天。採用【透析專用高蛋白配方】，液狀配方需計入每日液體限制。` });
+            alerts.push({ type: 'green', text: `<b>血液透析 (HD-CKD Stage 5D) 衛教原則：</b>代謝穩定者蛋白質目標 ${s.proteinTarget.min}-${s.proteinTarget.max} g/kg/天；合併 PEW、感染或高分解時請個別調整。採用【透析專用高蛋白配方】，液狀配方需計入每日液體限制。` });
         } else {
             const pdStatusDescriptions = {
                 stable: '代謝穩定、營養狀態良好',

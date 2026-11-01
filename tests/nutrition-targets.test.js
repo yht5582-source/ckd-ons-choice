@@ -27,16 +27,21 @@ test('peritoneal dialysis with PEW, peritonitis, or catabolism uses 1.3–1.5 g/
   });
 });
 
-test('hemodialysis keeps its existing target regardless of the PD modifier', () => {
+test('hemodialysis uses the KDOQI 1.0–1.2 range regardless of the PD modifier', () => {
   assert.deepEqual(getProteinTarget('hd', 'catabolic'), {
-    min: 1.2,
-    max: 1.4,
-    label: '1.2~1.4g',
+    min: 1.0,
+    max: 1.2,
+    label: '1.0~1.2g',
   });
 });
 
-test('non-dialysis CKD keeps its existing low-protein target', () => {
-  assert.deepEqual(getProteinTarget('ndd', 'stable'), {
+test('non-dialysis CKD target depends on diabetes (KDOQI 3.0.1, 3.0.2)', () => {
+  assert.deepEqual(getProteinTarget('ndd', 'stable', 'no'), {
+    min: 0.55,
+    max: 0.6,
+    label: '0.55~0.60g',
+  });
+  assert.deepEqual(getProteinTarget('ndd', 'stable', 'yes'), {
     min: 0.6,
     max: 0.8,
     label: '0.6~0.8g',
@@ -77,7 +82,7 @@ test('body: IBW, BMI and invalid height', () => {
 
 test('needs scale with IBW and protein target', () => {
   assert.deepEqual(E.computeNeeds(59.5, E.getProteinTarget('hd')), {
-    energyMin: 1785, energyMax: 2083, proteinMin: 71.4, proteinMax: 83.3,
+    energyMin: 1488, energyMax: 2083, proteinMin: 59.5, proteinMax: 71.4,
   });
 });
 
@@ -92,37 +97,37 @@ test('ranking is deterministic: preferred form first, original order kept', () =
 
 test('hyperkalemia sorts liquids by potassium', () => {
   assert.deepEqual(E.rankProducts('hd', 'decreased', 5.6, null).map(p => p.id),
-    ['shengli2', 'fresubin_protein', 'nepro', 'yuanqiqiang']);
+    ['shengli2', 'nepro', 'fresubin_protein', 'yuanqiqiang']);
 });
 
 test('PD uses the dialysis product line', () => {
   assert.ok(E.productsFor('pd').every(p => p.type === 'dd'));
 });
 
-test('NDD combo totals are computed (Na max is 303, not <288)', () => {
+test('NDD combo totals are computed from label values', () => {
   const c = E.computeCombo('ndd');
-  assert.deepEqual(c.kcal, [600, 625]);
-  assert.deepEqual(c.protein, [6.8, 11.4]);
-  assert.deepEqual(c.na, [253, 303]);
-  assert.deepEqual(c.k, [248, 378]);
-  assert.deepEqual(c.p, [152, 212]);
+  assert.deepEqual(c.kcal, [600, 646]);
+  assert.deepEqual(c.protein, [6.8, 11.6]);
+  assert.deepEqual(c.na, [249, 349]);
+  assert.deepEqual(c.k, [308, 408]);
+  assert.deepEqual(c.p, [152, 230]);
 });
 
-test('DD combo includes Nepro + 元氣強 = 529 kcal / 27.5 g / K 310.8', () => {
+test('DD combo includes 勝力2 + 元氣強 = 554 kcal / 28.6 g, max K 333 from 倍速力洗腎', () => {
   const c = E.computeCombo('hd');
   assert.equal(c.addon.id, 'yuanqiqiang');
-  assert.equal(c.kcal[1], 529);
-  assert.ok(c.protein[0] <= 27.5 && c.protein[1] >= 27.5);
-  assert.equal(c.k[1], 310.8);
+  assert.equal(c.kcal[1], 554);
+  assert.deepEqual(c.protein, [27.5, 28.6]);
+  assert.equal(c.k[1], 333);
 });
 
 test('high K alert only lists products truly below 200 mg in the patient\'s product line', () => {
   const hd = texts(baseState({ dialysis: 'hd', k: 5.4 }));
-  assert.match(hd, /元氣強 40.8mg/);
-  assert.doesNotMatch(hd, /勝力2 230mg/);
-  assert.doesNotMatch(hd, /倍速力/);
+  assert.match(hd, /元氣強 41mg、思耐得勝力2 190mg/);
+  assert.doesNotMatch(hd, /倍速力\(洗腎\) \d+mg/);
   const ndd = texts(baseState({ k: 5.4 }));
-  assert.match(ndd, /易能充 108mg、倍速力 140mg/);
+  assert.match(ndd, /易能充 108mg/);
+  assert.doesNotMatch(ndd, /倍速力\(未洗腎\) \d+mg/);
   assert.doesNotMatch(ndd, /元氣強/);
 });
 
@@ -134,9 +139,9 @@ test('K ≥ 6.0 asks for immediate physician review', () => {
 test('DM alert is dialysis-aware and names only low-GI products', () => {
   const ndd = dmText(baseState({ dm: 'yes', hba1c: 7.8 }));
   assert.match(ndd, /勝補納、思耐得慎選1/);
-  assert.doesNotMatch(ndd, /倍速力/);
+  assert.doesNotMatch(ndd, /倍速力\(未洗腎\) \d+mg/);
   const hd = dmText(baseState({ dialysis: 'hd', dm: 'yes', hba1c: 7.8 }));
-  assert.match(hd, /透析專用配方<\/b>（普寧勝）/);
+  assert.match(hd, /透析專用配方<\/b>（思耐得勝力2、普寧勝）/);
   assert.doesNotMatch(hd, /未透析患者/);
   assert.match(hd, /低估/);
 });
@@ -157,4 +162,15 @@ test('Na and corrected Ca are now evaluated', () => {
 test('BMI < 23 flags the ISRNM PEW body-mass criterion', () => {
   const s = baseState({ body: E.computeBody('female', 158, 48) });
   assert.match(texts(s), /ISRNM/);
+});
+
+test('product values match current labels', () => {
+  const by = Object.fromEntries(E.PRODUCTS.map(p => [p.id, p]));
+  const pick = p => [p.kcal, p.protein, p.na, p.k, p.p];
+  assert.deepEqual(pick(by.fresubin_renal), [400, 6, 136, 200, 110]);
+  assert.deepEqual(pick(by.fresubin_protein), [300, 20, 116, 292, 240]);
+  assert.deepEqual(pick(by.shengli2), [450, 20.2, 190, 190, 172]);
+  assert.deepEqual(pick(by.shenxuan1), [446, 10.8, 236, 300, 188]);
+  assert.deepEqual(pick(by.nepro), [425, 19.1, 250, 250, 170]);
+  assert.ok(E.PRODUCTS.every(p => p.src && p.src.startsWith('https://')));
 });
