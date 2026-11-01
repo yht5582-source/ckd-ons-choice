@@ -113,17 +113,17 @@ test('NDD combo totals are computed from label values', () => {
   assert.deepEqual(c.p, [152, 230]);
 });
 
-test('DD combo includes 勝力2 + 元氣強 = 554 kcal / 28.6 g, max K 333 from 倍速力洗腎', () => {
+test('DD combo includes 勝力2 + 元氣強 = 554 kcal / 28.6 g, max K 332.8 from 倍速力洗腎', () => {
   const c = E.computeCombo('hd');
   assert.equal(c.addon.id, 'yuanqiqiang');
   assert.equal(c.kcal[1], 554);
   assert.deepEqual(c.protein, [27.5, 28.6]);
-  assert.equal(c.k[1], 333);
+  assert.equal(c.k[1], 332.8);
 });
 
 test('high K alert only lists products truly below 200 mg in the patient\'s product line', () => {
   const hd = texts(baseState({ dialysis: 'hd', k: 5.4 }));
-  assert.match(hd, /元氣強 41mg、思耐得勝力2 190mg/);
+  assert.match(hd, /元氣強 40.8mg、思耐得勝力2 190mg/);
   assert.doesNotMatch(hd, /倍速力\(洗腎\) \d+mg/);
   const ndd = texts(baseState({ k: 5.4 }));
   assert.match(ndd, /易能充 108mg/);
@@ -172,5 +172,8 @@ test('product values match current labels', () => {
   assert.deepEqual(pick(by.shengli2), [450, 20.2, 190, 190, 172]);
   assert.deepEqual(pick(by.shenxuan1), [446, 10.8, 236, 300, 188]);
   assert.deepEqual(pick(by.nepro), [425, 19.1, 250, 250, 170]);
+  assert.deepEqual(pick(by.suplena), [425, 10.6, 190, 270, 170]);
+  assert.deepEqual(pick(by.yinengchong), [200, 0.8, 113, 108, 42]);
+  assert.deepEqual(pick(by.yuanqiqiang), [104, 8.4, 107, 40.8, 86]);
   assert.ok(E.PRODUCTS.every(p => p.src && p.src.startsWith('https://')));
 });

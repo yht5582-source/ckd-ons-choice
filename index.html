@@ -94,7 +94,7 @@
         }
         footer { text-align: center; padding: 20px; font-size: 0.85rem; color: var(--text-secondary); margin-top: 20px; border-top: 1px solid var(--border-color); }
     </style>
-    <link rel="stylesheet" href="teach.css?v=2.2">
+    <link rel="stylesheet" href="teach.css?v=2.2.1">
 </head>
 <body>
     <div class="container">
@@ -198,7 +198,7 @@
         <section id="view-cases" hidden>
             <h2 class="view-title">示範病例</h2>
             <p class="view-intro">六位都是虛構病人。表格由決策工具即時算出，按「帶入工具」可繼續調整。內文會分開標示「工具規則」與指引條文。</p>
-            <div class="data-note"><b>產品數值：</b>勝力 2、慎選 1 與兩款倍速力已於 2026-11-01 對照原廠標示。普寧勝、勝補納、易能充、元氣強採本系列 ONS 工具於 2026-10-04 查證的原廠資料。標示可能改版，處方前請再核對。</div>
+            <div class="data-note"><b>產品數值：</b>八項產品的熱量、蛋白質、鈉、鉀、磷已於 2026-11-01 對照原廠營養標示。倍速力（洗腎）為熱帶水果口味的標示。標示可能改版，處方前請再核對。</div>
             <div id="case-list"></div>
             <div class="source-list-box"><h3>參考資料</h3><ul class="source-list"></ul></div>
         </section>
@@ -231,11 +231,11 @@
 
         <footer>
             <p>臨床備忘：本系統依據 KDOQI 指引與衛福部特殊營養食品規範開發。食慾下降或體重減輕個案優先推薦高能量密度液狀濃縮配方；食慾正常個案可優先推薦粉狀配方作為正餐點心彈性補充。實際處方請由營養師評估。產品營養標示可能改版，使用前請核對原廠最新資料。</p>
-            <p>v2.2｜2026-11-01</p>
+            <p>v2.2.1｜2026-11-01</p>
         </footer>
     </div>
 
-    <script src="nutrition-targets.js?v=2.2"></script>
+    <script src="nutrition-targets.js?v=2.2.1"></script>
     <script>
         const E = window.CKDONS;
         const $ = id => document.getElementById(id);
@@ -400,7 +400,7 @@
 
         document.addEventListener('DOMContentLoaded', calculateAll);
     </script>
-    <script src="teach-content.js?v=2.2"></script>
-    <script src="teach.js?v=2.2"></script>
+    <script src="teach-content.js?v=2.2.1"></script>
+    <script src="teach.js?v=2.2.1"></script>
 </body>
 </html>

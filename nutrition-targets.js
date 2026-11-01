@@ -164,13 +164,13 @@
             protein: 8.4,
             proteinRatio: '32%',
             na: 107,
-            k: 41,
+            k: 40.8,
             p: 86,
             lowGI: false,
             src: 'https://www.enutrition.com.tw/products/kidney-powder-dialysis',
-            clinicalFocus: '【粉狀沖泡】高蛋白質密度 (32%) + 極低鉀離子 (41mg/包)',
-            features: '食慾正常時首選！蛋白質比例高達 32%，鉀離子極低（僅 41 mg），適合透析間期食慾正常個案作為點心濃縮補充蛋白質。',
-            tags: ['粉狀沖泡配方', '蛋白密度32%', '食慾正常點心首選', '極低鉀41mg']
+            clinicalFocus: '【粉狀沖泡】高蛋白質密度 (32%) + 極低鉀離子 (40.8mg/包)',
+            features: '食慾正常時首選！蛋白質比例高達 32%，鉀離子極低（僅 40.8 mg），適合透析間期食慾正常個案作為點心濃縮補充蛋白質。',
+            tags: ['粉狀沖泡配方', '蛋白密度32%', '食慾正常點心首選', '極低鉀40.8mg']
         }
     ];
 

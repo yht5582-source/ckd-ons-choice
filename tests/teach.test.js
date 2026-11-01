@@ -79,9 +79,9 @@ test('quiz calculations hold in the engine', () => {
     const b = dd.find((p) => p.id === 'yuanqiqiang');
     assert.equal(a.kcal + b.kcal, 554);
     assert.equal(Math.round((a.protein + b.protein) * 10) / 10, 28.6);
-    assert.equal(a.k + b.k, 231);
+    assert.equal(a.k + b.k, 230.8);
     assert.equal(a.p + b.p, 258);
-    assert.equal(QUIZ[15].options[QUIZ[15].answer], '554 kcal、28.6 g、鉀 231 mg');
+    assert.equal(QUIZ[15].options[QUIZ[15].answer], '554 kcal、28.6 g、鉀 230.8 mg');
 
     const pd = E.computeNeeds(63, E.getProteinTarget('pd', 'stable'));
     assert.deepEqual([pd.energyMin - 400, pd.energyMax - 400], [1175, 1805]);
