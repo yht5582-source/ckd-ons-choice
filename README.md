@@ -16,6 +16,7 @@
 - 提供未透析與透析患者的跨品牌組合示例，組合總量由產品資料即時計算。
 - 內建兩組示範個案，可快速了解操作流程。
 - 支援重置資料以及列印／匯出評估頁面。
+- 教學分頁：示範病例 6 例（`#cases`，可帶入工具）、考題 20 題（`#quiz`，基礎與高階各 10 題）、心智圖（`#map`）。
 
 ## 適用情境
 
@@ -88,8 +89,11 @@ http://localhost:8000
 .
 ├── index.html                    # 介面、樣式與畫面渲染
 ├── nutrition-targets.js          # 計算引擎：產品資料、蛋白質目標、需求、排序、組合與警訊
+├── teach-content.js              # 教學內容：病例、考題、心智圖與參考資料
+├── teach.js / teach.css          # 教學分頁的渲染與樣式
 ├── tests/
-│   └── nutrition-targets.test.js # 引擎自動化測試
+│   ├── nutrition-targets.test.js # 引擎自動化測試
+│   └── teach.test.js             # 病例與考題數字對引擎的核對
 └── README.md                     # 專案說明
 ```
 
@@ -98,7 +102,7 @@ http://localhost:8000
 執行自動化測試：
 
 ```bash
-node --test tests/nutrition-targets.test.js
+node --test tests/*.test.js
 ```
 
 ## 產品資料維護

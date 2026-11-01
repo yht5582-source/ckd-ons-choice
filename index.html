@@ -94,6 +94,7 @@
         }
         footer { text-align: center; padding: 20px; font-size: 0.85rem; color: var(--text-secondary); margin-top: 20px; border-top: 1px solid var(--border-color); }
     </style>
+    <link rel="stylesheet" href="teach.css?v=2.1">
 </head>
 <body>
     <div class="container">
@@ -101,6 +102,19 @@
             <h1>🩺 第五期慢性腎臟病 (CKD Stage 5 / 5D) 口服營養品智慧匹配與跨品牌組合系統</h1>
             <p>臨床決策支援工具｜整合身體指標、食慾/體重趨勢、透析狀態與檢驗數據，提供液狀/粉狀劑型優先決策與「跨品牌組合配方」調配建議</p>
         </header>
+
+        <nav class="view-tabs" aria-label="頁面分頁">
+            <button type="button" id="tab-tool" class="active" data-view="tool" aria-current="page">決策工具</button>
+            <button type="button" id="tab-cases" data-view="cases" aria-current="false">示範病例 6</button>
+            <button type="button" id="tab-quiz" data-view="quiz" aria-current="false">考題 20</button>
+            <button type="button" id="tab-map" data-view="map" aria-current="false">心智圖</button>
+        </nav>
+
+        <section id="view-tool">
+        <div id="demo-banner" class="demo-banner" role="status" hidden>
+            <span id="demo-banner-text"></span>
+            <button type="button" id="demo-clear">清除並重置</button>
+        </div>
 
         <div class="quick-actions">
             <button class="btn-action" onclick="loadSampleData('ndd_dm')">💡 載入範例：未透析 + 糖尿病個案</button>
@@ -179,14 +193,49 @@
                 </div>
             </div>
         </div>
+        </section>
+
+        <section id="view-cases" hidden>
+            <h2 class="view-title">示範病例</h2>
+            <p class="view-intro">六位都是虛構病人。表格由決策工具即時算出，按「帶入工具」可繼續調整。內文會分開標示「工具規則」與指引條文，兩者不同時也會直接說明。</p>
+            <div class="data-note"><b>產品數值請先核對標示：</b>本頁內建值尚未逐項對照最新標示，病例與考題的計算都以內建值為準。已知差異：普寧勝鉀 270 mg（原廠資料 250 mg）；「倍速」此處為鈉 120、鉀 240、磷 160 mg，而另一查證來源的倍速 Supportan 為癌症配方，鈉 95、鉀 256、磷 240 mg；通路資料的勝力 2 為約 450 kcal、20.2 g。</div>
+            <div id="case-list"></div>
+            <div class="source-list-box"><h3>參考資料</h3><ul class="source-list"></ul></div>
+        </section>
+
+        <section id="view-quiz" hidden>
+            <h2 class="view-title">考題</h2>
+            <p class="view-intro">基礎 10 題、高階 10 題。高階題包含多步驟計算、工具與指引的差異，以及工具的盲點。作答後立即顯示解析，重新整理頁面就會清空。</p>
+            <div class="quiz-bar">
+                <div id="quiz-filter" class="quiz-filter">
+                    <button type="button" data-filter="全部" aria-pressed="true">全部</button>
+                    <button type="button" data-filter="基礎" aria-pressed="false">基礎</button>
+                    <button type="button" data-filter="高階" aria-pressed="false">高階</button>
+                </div>
+                <div class="quiz-score-wrap"><span id="quiz-score"></span><button type="button" id="quiz-reset">重新作答</button></div>
+            </div>
+            <div id="quiz-list"></div>
+            <div class="source-list-box"><h3>參考資料</h3><ul class="source-list"></ul></div>
+        </section>
+
+        <section id="view-map" hidden>
+            <h2 class="view-title">心智圖</h2>
+            <p class="view-intro">從分族群到追蹤的總覽。點分支標題可收合。內容與示範病例、考題同一套依據，僅作教學摘要。</p>
+            <div class="map-actions">
+                <button type="button" data-map-all="open">全部展開</button>
+                <button type="button" data-map-all="close">全部收合</button>
+            </div>
+            <div id="map-body" class="map-body"></div>
+            <div class="source-list-box"><h3>參考資料</h3><ul class="source-list"></ul></div>
+        </section>
 
         <footer>
             <p>臨床備忘：本系統依據 KDOQI 指引與衛福部特殊營養食品規範開發。食慾下降或體重減輕個案優先推薦高能量密度液狀濃縮配方；食慾正常個案可優先推薦粉狀配方作為正餐點心彈性補充。實際處方請由營養師評估。產品營養標示可能改版，使用前請核對原廠最新資料。</p>
-            <p>v2.0｜2026-10-25</p>
+            <p>v2.1｜2026-11-01</p>
         </footer>
     </div>
 
-    <script src="nutrition-targets.js?v=2.0"></script>
+    <script src="nutrition-targets.js?v=2.1"></script>
     <script>
         const E = window.CKDONS;
         const $ = id => document.getElementById(id);
@@ -351,5 +400,7 @@
 
         document.addEventListener('DOMContentLoaded', calculateAll);
     </script>
+    <script src="teach-content.js?v=2.1"></script>
+    <script src="teach.js?v=2.1"></script>
 </body>
 </html>
